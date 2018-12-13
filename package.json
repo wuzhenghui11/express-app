@@ -9,7 +9,8 @@
 	"scripts": {
 		"start": "gulp server",
 		"test": "node ./build/test",
-		"dev": "gulp -sw"
+		"dev": "gulp -sw",
+		"gitcommit": "git add . && git commit -m 'update' && git push"
 	},
 	"dependencies": {
 		"archiver": "^2.1.1",
