@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    	<title>regExp</title>
+    	<link rel="stylesheet" href="/css/style.min.css" />
+	</head>
+	<body>
+		<h1 id="app"></h1>
+		<div style="writing-mode: vertical-lr;">englishs</div>
+		<script src="/js/lib/require.js"></script>
+		<script>
+			console.dir(document.querySelector('html').style.cursor = "crosshair");
+
+			// document.addEventListener("DOMContentLoaded", function(event) {
+			// 	console.log(this);
+			// 	this.body.style.cursor = "crosshair";
+			// });
+		</script>
+    	<script>
+    		require(["js/common"], function(){
+    			require(["jquery", "vue"], function($, Vue){
+    				require(["vuex"], function(Vuex){
+	    				Vue.use(Vuex);
+						const store = new Vuex.Store({
+							state: {
+								count: 0
+							},
+							mutations: {
+								increment (state) {
+									state.count++
+								}
+							}
+						});
+						var app = new Vue({
+							el: '#app',
+							store,
+							data: function(){
+								return {
+									message: 'Hello Vue!'
+								}
+						 	},
+						 	methods: {
+						 		test0: function(){
+						 			this.$store.commit('increment');
+						 		}
+						 	},
+						 	computed: {
+						 		count: function(){
+						 			return this.$store.state.count;
+						 		}
+						 	},
+						 	directives: {
+						      inputnumber: {
+						        inserted: function (el, binding, vnode) {
+						          let tempVal = ''
+						          el.addEventListener('input', function () {
+						            if (el.value !== '') {
+						              let reg
+						              if (binding.modifiers.nopoint) {
+						                reg = /^[1-9]\d*$/
+						              } else {
+						                reg = /^[1-9]+\.?\d{0,1}$/
+						              }
+						              if (!reg.test(el.value)) {
+						                el.value = tempVal
+						              } else if (!binding.value) {
+						                tempVal = el.value
+						              } else if (el.value > parseInt(binding.value)) {
+						                el.value = binding.value
+						                tempVal = el.value
+						              } else {
+						              	tempVal = el.value
+						              }
+						            } else {
+						              tempVal = ''
+						            }
+						            console.log(el.value);
+						          }, false)
+						        }
+						      }
+						    }
+						});
+					});
+					
+	    			var a = "aee12";
+	    			a.replace(/\d+/g, function(s, c, d){
+	    				console.log(s);
+	    				console.log(c);
+	    				console.log(d);
+	    			});
+
+					function deepCopy(p, c){
+						var c = c || {};
+						for(var i in p){
+							if(typeof p[i] == 'object'){
+								c[i] = (p[i].constructor === Array) ? [] : {};
+								deepCopy(p[i], c[i]);
+							}
+							else{
+								c[i] = p[i];
+							}
+						}
+						return c;
+					}
+
+					function getXMLHttpRequest(){
+						var xhr;
+						if(window.ActiveXObject){
+							xhr = new ActiveXObject("Microsoft.XMLHTTP")
+						}
+						else if(window.XMLHttpRequest){
+							xhr = new XMLHttpRequest();
+						}
+						return xhr;
+					}
+					function save(){
+						var xhr = getXMLHttpRequest();
+						xhr.open("post", "url");
+						xhr.send("date");
+						xhr.onreadystatechange = function(){
+							if(xhr.readyState == 4 && xhr.status == 200){
+								console.log(xhr.responseText);
+							}
+						}
+					}
+
+					/*var singleton = function(fn){
+						var result;
+						return function(){
+							return result || (result = fn.apply(this, arguments));
+						}
+					}
+					var createMask = singleton(function(){
+						return document.body.appendChild(document.createElement('div'));
+					});
+
+					$(function(){
+						$.get("http://192.168.1.111:3000/getData", function(data){
+							var data = data.data;
+							for(var i = 0; i < data.length; i++){
+								console.log(data[i].phoneNumber);
+							}
+						});
+					});*/
+
+					var events = function(){
+						var listen, obj, one, remove, trigger, _this;
+						obj = {};
+						_this = this;
+						listen = function(key, eventfn){
+							var stack = (!!obj[key]) ? obj[key] : obj[key] = [];
+							return stack.push(eventfn);
+						};
+						one = function(key, eventfn){
+							remove(key);
+							return listen(key,eventfn);
+						};
+						remove = function(key){
+							return (!!obj[key]) ? obj[key].length = 0 : void 0;
+						};
+						trigger = function(){
+							var fn, stack, key;
+							key = Array.prototype.shift.call(arguments);
+							var stack = (!!obj[key]) ? obj[key] : obj[key] = [];
+							for(var i = 0, len = stack.length; i < len; i++){
+								fn = stack[i];
+								if(fn.apply(_this, arguments) === false){
+									return false;
+								}
+							}
+						};
+						return {
+							listen: listen,
+							one: one,
+							remove: remove,
+							trigger: trigger
+						}
+					}
+					var eee = events();
+					eee.listen("play", function(data){ //  观察者
+						console.log(data.name);
+					});
+					eee.trigger("play", {"name":"22"}); // 发布者
+
+					
+
+					var currying = function(fn) {
+					    // fn 指官员消化老婆的手段
+					    var args = [].slice.call(arguments, 1);
+					    // args 指的是那个合法老婆
+					    return function() {
+					        // 已经有的老婆和新搞定的老婆们合成一体，方便控制
+					        var newArgs = args.concat([].slice.call(arguments));
+					        // 这些老婆们用 fn 这个手段消化利用，完成韦小宝前辈的壮举并返回
+					        return fn.apply(null, newArgs);
+					    };
+					};
+
+					// 下为官员如何搞定7个老婆的测试
+					// 获得合法老婆
+					var getWife = currying(function() {
+					    var allWife = [].slice.call(arguments);
+					    // allwife 就是所有的老婆的，包括暗渡陈仓进来的老婆
+					    console.log(allWife.join(";"));
+					}, "合法老婆");
+
+					// 获得其他6个老婆
+					getWife("大老婆","小老婆","俏老婆","刁蛮老婆","乖老婆","送上门老婆");
+
+					// 换一批老婆
+					getWife("超越韦小宝的老婆");
+
+
+					function A( name ){
+						this.name = name;
+					}
+					function ObjectFactory(){
+						var obj = {},
+						Constructor = Array.prototype.shift.call( arguments );
+						obj.__proto__ =  typeof Constructor.prototype === 'number' ? Object.prototype : Constructor.prototype;
+						var ret = Constructor.apply( obj, arguments );
+						return typeof ret === 'object' ? ret : obj;
+					}
+					var a = ObjectFactory( A, 'svenzeng' );
+					// alert ( a.name );  //svenzeng
+				});
+    		});
+		</script>
+	</body>
+</html>
+

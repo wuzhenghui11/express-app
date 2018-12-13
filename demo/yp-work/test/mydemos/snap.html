@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title></title>
+</head>
+<style type="text/css">
+	<!--line{fill:none; shape-rendering:crispedges; stroke:#c5c5c5;}
+	text{stroke:#606060; shape-rendering:crispedges; font-size:12px;}
+	.domain{stroke:#c5c5c5; shape-rendering:crispedges; fill:none;}-->
+	*{shape-rendering:crispedges;}
+	text{text-anchor:middle;}
+</style>
+<body>
+<svg id="svg" width="320" height="180"></svg>
+<script src="../js/lib/snap.svg-min.js"></script>
+<script>
+	/*** 例子一 ***/
+	"use strict";
+	(function(){
+		var svg = Snap("#svg");
+		var p = svg.paper.path("M10-5-10,15M15,0,0,15M0-5-20,15").attr({
+        fill: "none",
+        stroke: "#bada55",
+        strokeWidth: 5
+    }).pattern(0, 0, 20, 20),
+    c = svg.paper.circle(200, 200, 100);
+c.attr({
+    fill: p
+});
+		
+		/*// x轴
+		var xAxis = svg.paper.path("M30 150L310 150").attr({
+			stroke:"#c5c5c5",
+			strokeWidth:1
+		});
+		
+		// y轴
+		var yAxis = svg.paper.path("M30 0L30 150").attr({
+			stroke:"#c5c5c5",
+			strokeWidth:1
+		});
+		
+		// 红色虚线
+		var redLine = svg.paper.path("M30 120L310 120").attr({
+			stroke:"#ff3137",
+			strokeWidth:1,
+			strokeDasharray:"6,5"
+		});
+		
+		// 绿色虚线
+		var redLine = svg.paper.path("M30 60L310 60").attr({
+			stroke:"#34d805",
+			strokeWidth:1,
+			strokeDasharray:"6,5"
+		});
+		// x坐标点组
+		var g1 = svg.paper.g().attr({
+			transform:"translate(0,0)"
+		});
+		// x坐标点
+		var xd = 280/10; // x轴坐标点相距
+		for(var i = 0; i <= 10; i++){
+			var x = xd * i + 30;
+			var line = svg.paper.line(x,150,x,153).attr({
+				stroke:"#000",
+				strokeWidth:1
+			});
+			if(i == 0){
+				var xText = svg.paper.text(x-10, 167, "" + i);
+			}
+			else{
+				var xText = svg.paper.text(x, 167, "" + i);
+			}
+			var xg = svg.paper.g();
+			xg.add(line,xText);
+			g1.add(xg);
+		}
+		
+		var g2 = svg.paper.g().attr({
+			transform:"translate(0,0)"
+		});
+		
+		//y坐标点
+		var yd = 120/4;  // y轴坐标点相距
+		for(var k = 0; k <= 5; k++){
+			var y = yd * k;
+			var t = 5 - k;
+			//var line = svg.paper.line(25,y,30,y).attr({
+			//	stroke:"#000",
+			//	strokeWidth:1
+			//});
+			if(k == 0){
+				var yText = svg.paper.text(15, y + 12, "毫米").attr({
+					fontSize:"12px",				
+					shapeRendering:"crispedges"
+				});
+			}
+			else{
+				var yText = svg.paper.text(20, y + 4, t);
+			}
+			
+			var yg = svg.paper.g();
+			yg.add(yText);
+			g2.add(yg);
+		}
+		
+		var p1 = svg.paper.polyline(35,120, 100,60, 160,65, 210,120, 272,115).attr({
+			stroke:"#1a7ff5",
+			fill:"rgba(0,0,0,0)",
+			strokeWidth:1
+		});
+		var c1 = svg.paper.circle(272, 115, 0).attr({
+			fill: "#1a7ff5"	// 蓝色
+		});
+		var text = svg.paper.path("M30 60L30 60").attr({
+			fill:"rgba(0,0,0,0)",
+			stroke:"#c5c5c5",
+			strokeWidth:1
+			
+		});
+		text.animate({
+			d:"M50 60L100 90"	// 蓝色
+		}, 3000, mina.bounce);
+		c1.animate({
+			r:9
+		}, 3000, mina.bounce);*/
+	})();
+</script>
+</body>
+</html>
+

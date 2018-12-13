@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title></title>
+<link rel="stylesheet" href="css/slider.css" />
+</head>
+<body>
+	<div id="slider_box" class="slider_box">
+		<a class="prev_btn" href="javascript:;"></a>
+		<a class="next_btn" href="javascript:;"></a>
+		<div class="slider">
+			<div style="background-color:gray;"><img src="images/1.jpg" alt="" /></div>
+			<div style="background-color:yellow;"><img src="images/2.jpg" alt="" /></div>
+			<div style="background-color:orange;"><img src="images/3.jpg" alt="" /></div>
+			<div style="background-color:green;"><img src="images/4.jpg" alt="" /></div>
+			<div style="background-color:blue;"><img src="images/5.jpg" alt="" /></div>
+		</div>
+		<div class="slider_navbtn">
+		</div>
+	</div>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/slider.js"></script>
+<script>
+	$("#slider_box").slider({
+		container:"#slider_box",
+		auto:false,
+		width:"auto",
+		switchTime:800,
+		interval:3000
+	});
+</script>
+</body>
+</html>
+

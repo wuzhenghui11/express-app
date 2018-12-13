@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title></title>
+<!--[if lt ie 9]>
+<script src="js/lib/html5.min.js"></script> 
+<![endif]-->
+<link rel="stylesheet" href="../css/common.css" />
+</head>
+<body>
+<canvas id="myCanvas" style="width:500px; height:250px; background-color:gray;"></canvas>
+<script src="https://cdn.bootcss.com/EaselJS/0.8.0/easeljs.min.js"></script>
+<script src="https://cdn.bootcss.com/tweenjs/0.6.1/tweenjs.min.js"></script>
+<script>
+	// 创建舞台
+	var stage = new createjs.Stage('myCanvas');
+	
+	// 创建圆
+	var circle = new createjs.Shape();
+	circle.graphics.beginFill("DeepSkyBlue").drawCircle(0,0,25); // parameter(坐标X,坐标Y,半径)；
+	circle.x = 25;  // 坐标
+	circle.y = 25;
+	
+	// 创建矩形
+	var box = new createjs.Shape();
+	box.graphics.beginLinearGradientFill(["orange", "red"], [1, 0], 0, 0, 50, 30); // 设置颜色渐变
+	box.graphics.drawRect(0,0,100,100);
+	box.cache(0,0,50,50);
+	
+	var bmp = new createjs.Bitmap("images/01.jpg");
+	bmp.filters = [new createjs.AlphaMapFilter(box.cacheCanvas)];
+	bmp.cache(50,0,100,150);
+	
+	
+	stage.addChild(bmp);
+	stage.addChild(box);
+	stage.addChild(circle);
+	stage.update();
+	
+	// 动画
+	createjs.Tween.get(circle,{loop:false})
+		.to({x:100},1000,createjs.Ease.getPowInOut(4))
+		.to({alpha:0.3,y:100},500,createjs.Ease.getPowInOut(2))
+		.to({alpha:0.7,x:200},800,createjs.Ease.getPowInOut(2))
+		.to({alpha:1,y:25},1000,createjs.Ease.getPowInOut(2))
+		.to({x:300},800,createjs.Ease.getPowInOut(2));
+	createjs.Ticker.setFPS(60);
+	createjs.Ticker.addEventListener("tick",stage);
+</script>
+</body>
+</html>
+

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title></title>
+<link href="https://cdn.bootcss.com/dragula/3.6.6/dragula.min.css" rel="stylesheet">
+<style type="text/css">
+	*{margin:0; padding:0;}
+	.left{width:300px; height:300px; border:1px solid orange;}
+	.right{width:300px; height:300px; border:1px solid red;}
+	span{background-color:green; display:block;}
+	a{background-color:blue; display:block;}
+</style>
+</head>
+<body>
+<div id="left" class="left">
+	<span class="you-may-copy-us">111</span>
+	<p>
+		<span>a</span>
+		<span>b</span>
+	</p>
+</div>
+<div id="right" class="right">
+	<span>222</span>
+	<p>
+		<span>c</span>
+		<span>d</span>
+	</p>
+	<input type="text"/>
+</div>
+
+<a class="dragula-container" href="javascript:;">。。。</a>
+
+<script src="https://cdn.bootcss.com/dragula/3.6.6/dragula.min.js"></script>
+<script>
+	var drake = dragula([document.querySelector('#left'), document.querySelector('#right')],{
+		isContainer: function (el) {
+			return el.classList.contains("dragula-container"); // only elements in drake.containers will be taken into account （也可以设置第三个可以被拖拽的容器）
+		},
+		moves: function (el, source, handle, sibling) {
+			return true; // elements are always draggable by default  （也可以设置哪些元素能移动）
+		},
+		accepts: function (el, target, source, sibling) {
+			return true; // elements can be dropped in any of the `containers` by default （也可以设置元素只能放在哪里不能放在哪里）
+		},
+		invalid: function (el, handle) {
+			return false; // don't prevent any drags from initiating by default （可以改变，默认的是不阻止任何可已被拖拽的元素）
+		},
+		direction: 'vertical',             // Y axis is considered when determining where an element would be dropped
+		copy: false,                       // 如果为true则是将元素从一个容器拷贝到另外一个容器
+		/*copy:function(el,source){			// 可以这样规定类为“you-may-copy-us”的元素才能被copy
+			return el.className === "you-may-copy-us";
+		},*/
+		copySortSource: false,             // 如果为ture允许容器内元素自定义顺序
+		revertOnSpill: false,              // 如果为true让超出容器的元素回到它原来的容器，而不是回到曾经被拖进去过的容器
+		removeOnSpill: false,              // 如果为true删除超出的元素
+		mirrorContainer: document.body,    // 设置被拖动的元素会在哪里映射一个 这个地方设置是在body标签内
+		ignoreInputTextSelection: true     // 在input输入框中让鼠标可以拖动选中值，为false则不可以而是直接拖动input元素
+	});
+</script>
+</body>
+</html>
+

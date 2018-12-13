@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/style.min.css" />
+	<!--[if lt ie 9]>
+		<script src="js/lib/html5.min.js"></script> 
+	<![endif]-->
+	<style type="text/css">
+		#canvasBox canvas{
+			margin-bottom: 5px;
+			box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+		}
+
+		#result img{
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<div>
+			<input id="file" v-on:change="test($event)" type="file" multiple="multiple">
+
+			<p><label>以多少高度的像素去裁剪：</label><input id="text1" type="text" name=""></p>
+			<p><label>裁剪成多少份：</label><input id="count" type="text" name="" value="3"></p>
+			<p><label>图片质量0-1：</label><input id="quality" type="text" name=""></p>
+			<button id="clip">开始裁剪</button>
+		</div>
+		<div style="overflow: auto; min-width: 3000px;">
+			<canvas id="c1" style="float: left;"></canvas>
+
+			<div id="result" style="font-size: 0; margin-left: 10px; float: left;">
+			</div>
+		</div>
+		
+
+		<div id="canvasBox" style="font-size: 0; display: none;">
+		</div>
+	</div>
+	
+	<script src="/js/lib/require.js"></script>
+	<script>
+		require(['js/common'], function() {
+			require(['jquery', 'vue'], function($, Vue) {
+				var app = new Vue({
+					el: '#app',
+					data (){
+						return {
+							file: ''
+						}
+					},
+					methods: {
+						test (event) {
+							console.log(event);
+						}
+					},
+					computed: {
+						count (){
+							return this.$store.state.count;
+						}
+					}
+				});
+
+				let canvas = document.getElementById('c1');
+				let clipBtn = document.getElementById('clip');
+
+				let canvasBox = document.getElementById('canvasBox');
+				let result = document.getElementById('result');
+
+				let count = document.getElementById('count');
+				let quality = document.getElementById('quality');
+
+
+				let cxt = canvas.getContext("2d");
+				let file = document.getElementById("file");
+				
+				let img = new Image();
+				img.src = './images/01.jpg';
+
+				file.onchange = function(){
+					let url = window.URL.createObjectURL(file.files[0]);
+					img.src = url;
+					let reader = new FileReader();
+					reader.readAsDataURL(file.files[0]);//发起异步请求
+					reader.onload = function(){
+					//读取完成后，数据保存在对象的result属性中
+						// console.log(this.result)
+					}
+					// let count = 0;
+
+					// reader.onprogress = function(){
+					// 	count++;
+					// 	console.log("加载中" + count);
+					// }
+				}
+
+				img.onload = function(){
+					canvas.height = img.height;
+					canvas.width = img.width;
+					cxt.drawImage(img, 0, 0, canvas.width, canvas.height);
+					// console.log(canvas.getBoundingClientRect());
+				}
+
+				
+				clipBtn.onclick = function(){
+					// if (file.files.length == 0) {
+					// 	alert('请选张图片');
+					// 	return;
+					// }
+					let qualityVal = (quality.value == '') ? 1 : parseFloat(quality.value);
+					let countVal = (count.value == '') ? 1 : parseInt(count.value);
+					let height = parseInt((canvas.height - (canvas.height % countVal)) / countVal);
+
+					canvasBox.innerHTML = '';
+					result.innerHTML = '';
+					for (let i = 0; i < countVal; i++) {
+						let canvasC = document.createElement('canvas');
+						let sy = i * height;
+						if (i == countVal - 1 && (canvas.height % countVal) > 0){
+							height += canvas.height % countVal;
+						}
+						canvasC.width = canvas.width;
+						canvasC.height = height;
+						let cxtC = canvasC.getContext('2d');
+						// 返回一个ImageData对象，用来描述canvas区域隐含的像素数据
+						let dataImg = cxt.getImageData(0, sy, canvas.width, height);
+						// 然后通过 putImageData 将图像数据放回画布
+						cxtC.putImageData(dataImg, 0, 0, 0, 0, canvas.width, height);
+
+						canvasBox.appendChild(canvasC);
+
+						let image = new Image();
+						result.appendChild(image);
+					}
+					let promiseArr = [];
+
+					let len = canvasBox.getElementsByTagName('canvas').length;
+					for (let i = 0; i < len; i++) {
+						promiseArr.push(new Promise((resolve, reject) => {
+							// canvas转换成base64
+							// let base64 = canvas2.toDataURL("image/jpeg", 1);
+							canvasBox.getElementsByTagName('canvas')[i].toBlob((blob) => {
+								let data = URL.createObjectURL(blob);
+								result.getElementsByTagName('img')[i].src = data;
+								console.log(i);
+								resolve();
+							}, 'image/jpeg', qualityVal);
+						}));
+					}
+
+					Promise.all(promiseArr).then(() => {
+						console.log('裁剪完成');
+					});
+				}
+				
+				let testObj = {
+					a: ({
+						test: function(){
+							console.log(121);
+						}
+					})
+				}
+				testObj.a.test();
+				console.log();
+				
+
+			});
+		});
+	</script>
+</body>
+
+</html>

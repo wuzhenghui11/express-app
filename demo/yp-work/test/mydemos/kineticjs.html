@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title></title>
+<!--[if lt ie 9]>
+<script src="js/lib/html5.min.js"></script> 
+<![endif]-->
+<link rel="stylesheet" href="../css/common.css" />
+</head>
+<body>
+<style type="text/css">
+div[data-sha]:after{
+	content:"这" attr(data-sha) "也可以";
+	color:orange;
+}
+#cs{
+	position:absolute;
+	left:0;
+	top:0;
+	width:125px;
+	height:22px;
+	background-color:yellow;
+	transition:left 3s linear,top 3s linear;
+	box-shadow:0 0 0 10px blue, 0 0 0 15px green;
+}
+</style>
+<div id="cs" class="a b" data-sha="123">我去</div>
+<div id="container" style="width:600px; height:300px; background-color:gray;"></div>
+
+<script src="../js/lib/kinetic/kinetic-v5.1.0.min.js"></script>
+<script>
+	// 创建一个舞台
+	var stage = new Kinetic.Stage({
+		container:"container",
+		width:600,
+		height:300
+	});
+	
+	// 舞台上的一层
+	var layer = new Kinetic.Layer();
+	
+	// 画一个椭圆中空
+	var line = new Kinetic.Line({
+		x: 100,
+        points: [0, 200, 50, 190, 100, 200, 50, 210],
+        tension: 0.5,
+        closed: true,
+        stroke: "blue",
+        strokeWidth: 10,
+		draggable:true // 让图形可以被拖拽
+	});
+	// 画一个正方形
+	var rect = new Kinetic.Rect({
+		x:100,
+		y:50,
+		width:200,
+		height:100,
+		fill:"yellow",
+		draggable:true
+	});
+	// 画一个圆
+	var circle = new Kinetic.Circle({
+		x:53,
+		y:53,
+		radius:50,
+		fill:"yellow",
+		stroke:"red",
+		strokeWidth:3,
+		visible:false, //是否隐藏
+		draggable:true //可以拖拽
+	});
+	// 改变圆的颜色
+	circle.setFill("orange");
+	// 让圆隐藏
+	circle.hide();
+	// 让圆显示
+	circle.show();
+	
+	// 创建一个组将创建图形放到这个组里
+	var group = new Kinetic.Group();
+		group.add(line).add(rect).add(circle);
+	// 将组放进这个层里 也可以将创建的图形一个个的添加到层里
+	layer.add(group); // 如 layer.add(line).add(rect).add(circle);
+	// 将这个层放入舞台中 创建的图形显示完成
+	stage.add(layer); 
+	
+	// 为circle图形添加动画
+	var circleTween = new Kinetic.Tween({
+		node:circle,
+		x:550,
+		y:250,
+		duration:6, // 持续时间
+		easing:Kinetic.Easings.ElasticEaseOut, // 缓动方式
+	});
+	// 为矩形（rect）增加动画
+	var rectTween = new Kinetic.Tween({
+		node:rect,
+		x:100,
+		y:200,
+		duration:6,
+		easing:Kinetic.Easings.BackEaseOut
+	});
+	// 点击这个矩形或者手机上触摸时执行这个为其绑定的动画
+	rect.on("click touchstart",function(e){
+		rectTween.play(); // 点击播放
+	});
+	// 点击这个circle或者手机上触摸时执行这个为其绑定的动画
+	circle.on("click touchstart",function(){
+		circleTween.play();
+	});
+	// 为舞台增加一个事件监听
+	stage.getContainer().addEventListener("click",function(){
+		//circleTween.play(); // 播放circle动画
+		//document.querySelector("#cs").setAttribute("style","left:150px; top:150px;"); // FF Chrome safari
+		document.querySelector("#cs").style.cssText = "left:150px; top:150px;"; //IE
+	});
+	document.querySelector("#cs").addEventListener("transitionend",function(){
+		alert('GG');
+	},false);
+	// 
+	var cs = document.getElementById("cs");
+	
+	var style =  window.getComputedStyle(cs,":after");
+	cs.classList.add('huhu');
+	// 打印#cs伪类的值
+	console.log(style.getPropertyValue('content'));
+	
+	
+	cs.classList.remove("huhu");
+	/*  className与classList的区别 classList能够删除某个具体的类名或或得某个类 不能同时设置多个类
+		className是一次性获取，可以同时设置多个类
+	*/
+	console.log(cs.classList.item(0));
+	console.log(cs.classList.length);
+	cs.className = "e f j";
+	console.log(cs.className);
+</script>
+</body>
+</html>
+

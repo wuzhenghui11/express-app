@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, user-scalable=yes" />
+<title>perspective（透镜，望远镜） css3 3d视觉效果</title>
+
+<script src="../../js/lib/prefixfree.min.js"></script>
+<script src="../../js/lib/conic-gradient.js"></script><!--让浏览器对gradient支持--> 
+
+
+<style type="text/css">
+body{margin:0; padding:0;}
+.container{width:600px; height:600px; border:1px solid #cd0df6; margin:8px; position:relative; overflow:hidden;
+perspective:500px; -webkit-perspective:500px; perspective-origin:20% 68%; -webkit-perspective-origin:20% 68%;}
+.container > div{width:180px; height:180px; line-height:180px; text-align:center; font-size:58px; color:#fff;
+position:absolute; left:50%; top:50%; background-color:rgba(116,7,139,0.3); border:1px solid #000;}
+.plane1{transform:translate3d(-90px,-90px,-90px) rotateX(90deg);}
+.plane2{transform:translate3d(-90px,90px,-90px) rotateX(90deg);}
+.plane3{transform:translate3d(-180px,0,-90px) rotateY(90deg);}
+.plane4{transform:translate3d(0,0,-90px) rotateY(90deg);}
+.plane6{transform:translate3d(-90px,0,-180px);}
+.plane5{transform:translateX(-90px);}
+
+/*CSS针动画设置*/
+.jl{width:70px; height:101px; background:url(../../images/test.png) no-repeat -193px -112px;
+animation:run 4s steps(4,end) infinite;}
+@keyframes run{
+	0%{
+		background-position:-17px -112px;
+	}
+	100%{
+		background-position:-199px -112px; 
+	}
+}
+
+/*圆百分比 */
+.gradient{width:100px; height:100px; border-radius:50%; background:conic-gradient(red 30%, blue 0 50%, yellow 0 60%,green 0 80%,orange 0);}
+
+/* type为range */
+input[type=range].custom{
+	-webkit-appearance:none;
+	background-color:white;
+	width:200px;
+}
+input[type=range].custom::-webkit-slider-thumb{ // 自定义样式
+	-webkit-appearance:none;
+	background-color:Green;
+	opacity:0.5;
+	width:10px;
+	height:20px;
+}
+/* type为date */
+[type="date"]::-webkit-inner-spin-button, /* 上下箭头 */
+[type="date"]::-webkit-calendar-picker-indicator /* 下拉箭头 */
+{
+  /*display:none;*/
+}
+[type="date"]::-webkit-clear-button{ /* 隐藏清除按钮 */
+	display:none;
+}
+
+[type="date"]::-webkit-datetime-edit-text { /* 日期格式符号 */
+  color: transparent;
+}
+[type="date"]::-webkit-datetime-edit-text::before { /* 重写符号 */
+  content: '=';
+  position: absolute;
+}
+[type="date"]::-webkit-datetime-edit-text,
+[type="date"]::-webkit-datetime-edit-year-field,
+[type="date"]::-webkit-datetime-edit-month-field,
+[type="date"]::-webkit-datetime-edit-day-field,
+[type="date"]::-webkit-datetime-edit-hour-field,
+[type="date"]::-webkit-datetime-edit-minute-field,
+[type="date"]::-webkit-datetime-edit-ampm-field{
+  background:rgba(0,0,0,0.3);
+  color:red;
+}
+</style>
+</head>
+<body>
+<input type="date">
+
+<!--圆百分比-->
+<div class="gradient"></div>
+
+<!--css3 animation的steps针动画-->
+<div class="jl"></div>
+<!--3d方块-->
+<div class="container">
+	<div class="plane1">1</div>
+	<div class="plane2">2</div>
+	<div class="plane3">3</div>
+	<div class="plane4">4</div>
+	<div class="plane5">5</div>
+	<div class="plane6">6</div>
+</div>
+
+<!--一些HTML5的标签-->
+<header><nav></nav></header>
+<main>
+	<article>
+		<section>
+			<hgroup>
+				<h1></h1>
+				<h2></h2>
+			</hgroup>
+			<p>这是测试文字<mark>文字</mark>这是测试文字aaa<wbr />aaa这是测试文字</p>
+			111
+			<blockquote>
+				这是一些HTML的测试 blockquote 标签默认有前后有换行和边距 基本上都被支持
+			</blockquote>
+			222
+		</section>
+		<section>
+			<figure>
+				<figcaption>这是一张图片</figcaption>
+				<img src="../../images/01.jpg" alt="图" title="图"/> 
+			</figure>
+		</section>
+		<command onclick="alert(11)">click</command>  IE不支持
+		<form oninput="x.value = parseInt(a.value) + parseInt(b.value)">
+			<input class="custom" type="range" id="a" value="50">
+			<input type="number" id="b" value="50">
+			<output name="x" for="a b"></output>
+		</form>
+	</article>
+</main>
+<footer>
+</footer>
+
+</body>
+</html>
+

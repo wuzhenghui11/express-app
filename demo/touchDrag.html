@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    	<title>regExp</title>
+    	<link rel="stylesheet" href="/css/style.min.css" />
+	</head>
+	<body style="padding: 0; margin: 0;">
+
+		<div id="parent" style="height: 500px; background-color: gray; position: relative;">
+			<div id="touchMove" style="width: 100px; height: 100px; background-color: red; position: absolute; left: 0; top: 0"></div>
+		</div>
+		<p id="eventText" style="height: 30px; font-size: 20px; color: #fff;"></p>
+		<!--  -->
+		<script src="/js/lib/require.js"></script>
+    	<script>
+    		require(["js/common"], function(){
+    			require(["jquery", "vue"], function($, Vue){
+
+					var startX;
+					var startY;
+					var isChild = null;
+					$('#touchMove').on('touchstart', function(e) {
+						var touch = e.touches[0];
+						console.log(e);
+					});
+					$('#parent').on('touchstart', function(e){
+						console.log(e);
+						var touch = e.touches[0];
+						startX = touch.pageX;
+						startY = touch.pageY;
+						$('#eventText').text('x:' + touch.pageX + '   y:' + touch.pageY);
+						if(e.target.id == 'touchMove'){
+							isChild = e.target;
+						} else {
+							isChild = null;
+						}
+					}).on('touchmove', function(e) {
+						var touch = e.touches[0];
+						$('#eventText').text('x:' + touch.pageX + '-y:' + touch.pageY);
+						if(isChild){
+							isChild.style.transitionProperty = 'transform';
+							isChild.style.transitionDuration = '0ms'
+							isChild.style.transform = 'translate(' + touch.pageX + 'px,' + touch.pageY + 'px)';
+							/*isChild.style.transitionProperty = 'left,top';
+							isChild.style.transitionDuration = '0ms';
+							isChild.style.left = touch.pageX + 'px';
+							isChild.style.top = touch.pageY + 'px';*/
+						}
+					});
+				});
+    		});
+		</script>
+	</body>
+</html>
+

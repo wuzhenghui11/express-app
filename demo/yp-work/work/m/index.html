@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="apple-itunes-app" content="app-id=872660154" />
+<meta name="viewport" content="width=device-width, user-scalable=yes" />
+<title>随办</title>
+<link rel="shortcut icon" href="images/ioffice32x32.ico" type="image/x-icon" />
+<link rel="apple-touch-icon-precomposed" href="images/web-icon.png" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen"/>
+<link type="text/css" rel="stylesheet" href="css/index.css" />
+<!--[if lt ie 9]>
+<script src="js/respond1.4.2.min.js"></script>
+<![endif]-->
+<style type="text/css">
+#container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background:black;
+	display:none;
+	top:0;left:0;
+	padding:60px 0 0 28px;
+	opacity:0.9;
+	color:white;
+	z-index:120;
+}
+#container img {
+	margin-left:4px;
+	margin-right:4px;
+}
+#cnzz_stat_icon_1253465894 {
+	display: none;
+}
+</style>
+</head>
+<body onOrientationChange="updateWin();">
+<div class="phoneSite">
+	<div class="content">
+		<div class="header">
+			<div class="head">
+				<a class="logo" href="javascript:;"></a>
+				<div class="nav">
+					<a class="home cur" href="javascript:;">首页</a>
+					<a class="fun" href="javascript:;">功能</a>
+					<a class="con" href="javascript:;">联系我们</a>
+				</div>
+				<div class="navPack_wrap">
+					<a class="navPack" href="javascript:;"></a>
+				</div>
+				<a class="downLoad openApp" href="javascript:;">下载<span class="verdana">APP</span></a>
+			</div>
+			<div class="pop">
+				<span class="curClose"></span>
+				<a class="home" href="javascript:;">首页</a>
+				<a class="fun" href="javascript:;">功能介绍</a>
+				<a class="con" href="javascript:;">联系我们</a>
+			</div>
+			<div class="downLoadBox">
+				<div class="pc">
+					<h2><i class="icon"></i>PC端下载</h2>
+					<p><a class="pc_dl" target="_blank" href="http://www.ioffice100.com/downloads/pc/setup.exe">Windows PC 客户端<i class="icon"></i></a></p>
+				</div>
+				<div class="mobile">
+					<h2><i class="icon"></i>移动端下载</h2>
+					<div class="mob">
+						<img src="images/dl-er.jpg" width="116" height="116" />
+						<a class="ios_dl" target="_blank" href="https://itunes.apple.com/cn/app/ioffice-yi-dong-shi-dai-gong/id872660154?mt=8" >IOS<i class="icon"></i></a>
+						<a class="android_dl" target="_blank" href="http://www.ioffice100.com/apk/ioffice_OfficialWebsite.apk">Android<i class="icon"></i></a>
+						<a class="wp_dl" target="_blank" href="http://www.windowsphone.com/en-us/store/app/%E9%9A%8F%E5%8A%9E-ioffice/3a383253-4e4a-4d19-961a-70e030f1524e" >Winphone<i class="icon"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="din"></div>
+		<div class="banner">
+			<div id="ban_downLoad" class="downLoad">
+				<a class="openApp" href="javascript:;"></a>
+			</div>
+		</div>
+		<div class="tit">
+			<span class="black_dmd"></span>
+			<span class="fun_itd">功能介绍</span>
+			<i class="arrow-bottom"></i>
+		</div>
+		<div id="fun_mod" class="fun_mod">
+			<div class="container-fluid">
+				<div class="row" >
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod1" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">同事录</span>
+							<span class="fun_itd">
+								<p>企业移动</p>
+								<p>通讯录</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod2" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微任务</span>
+							<span class="fun_itd">
+								<p>企业执行力</p>
+								<p>神器</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod3" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微新闻</span>
+							<span class="fun_itd">
+								<p>企业新闻</p>
+								<p>直播间</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod4" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微签到</span>
+							<span class="fun_itd">
+								<p>外勤管理</p>
+								<p>掌中宝</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod5" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微推送</span>
+							<span class="fun_itd">
+								<p>企业信息</p>
+								<p>集线器</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod6" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微会议</span>
+							<span class="fun_itd">
+								<p>企业移动</p>
+								<p>会议室</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod7" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微日历</span>
+							<span class="fun_itd">
+								<p>随身工作</p>
+								<p>行事历</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod8" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微调查</span>
+							<span class="fun_itd">
+								<p>企业问卷</p>
+								<p>实时测</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod9" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微申请</span>
+							<span class="fun_itd">
+								<p>企业申请</p>
+								<p>审批王</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod10" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微网盘</span>
+							<span class="fun_itd">
+								<p>企业私有</p>
+								<p>云网盘</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod11" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微合作</span>
+							<span class="fun_itd">
+								<p>智能商务</p>
+								<p>人脉通</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod12" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">同事圈</span>
+							<span class="fun_itd">
+								<p>企业内部</p>
+								<p>分享圈</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<a class="fun fun_mod13" href="javascript:;">
+							<i class="icon"></i>
+							<span class="fun_name">微投票</span>
+							<span class="fun_itd">
+								<p>互动及时</p>
+								<p>投票器</p>
+							</span>
+							<span class="thread"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="itd">
+				<div class="container-fluid">
+					<div class="row" >
+						<div class="col-xs-12 col-sm-6 first">
+							<div class="footer_logo"><img src="images/footer_logo.png" width="400" height="129" /></div>
+							<p class="text">用移动互联网思维，变革公司组织方式，创新企业管理模式</br>用移动协作工具，随时随地管理、执行、协作、分享</br>用随办，引领企业全面进入移动工作时代</p>
+						</div>
+						<div class="col-xs-12 col-sm-6 last">
+							<div class="last_box">
+								<h2 class="curtit">联系方式</h2>
+								<div class="method phone"><i class="icon"></i><span><a href="tel:4008482100">400-8482-100</a></span></div>
+								<div class="method email"><i class="icon"></i><span><a href="mailto:100@ioffice100.com">100@ioffice100.com</a></span></div>
+								<div class="method sina"><i class="icon"></i><span><a href="http://weibo.com/3955367829" target="_blank">@工作用随办</a></span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="slide-box">
+	<div class="itd_page">
+		<div class="closeWrap">
+			<a class="curClose" href="javascript:;"></a>
+		</div>
+		<div class="content">
+			<a class="left" href="javascript:;"></a>
+			<a class="right" href="javascript:;"></a>
+			<div id="slide" class="slide">
+				<ul id="slide_show" class="slide_show" style="left:0;">
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon01"></i>同事录<span class="saying">企业移动通讯录</span></h2>
+							<p>部门架构一目了然</p>
+							<p>快速搜索即可找到</p>
+							<p>信息更新实时同步</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/fun_01.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon02"></i>微任务<span class="saying">企业执行力神器</span></h2>
+							<p>有了任务随时指派</p>
+							<p>执行进展一目了然</p>
+							<p>督办纠偏随时随地</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_02.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon03"></i>微新闻<span class="saying">企业新闻直播间</span></h2>
+							<p>重大新闻实时报</p>
+							<p>图文栏目任你调</p>
+							<p>评论互动真高效</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_03.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon04"></i>微签到<span class="saying">外勤管理掌中宝</span></h2>
+							<p>出差外勤易管理</p>
+							<p>拍个照片留记号</p>
+							<p>路线分享真是妙</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_04.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon05"></i>微推送<span class="saying">企业信息集线器</span></h2>
+							<p>信息通知即时推送</p>
+							<p>内部系统一站沟通</p>
+							<p>待办事项快速处理</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_05.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon06"></i>微会议<span class="saying">企业移动会议室</span></h2>
+							<p>随时随地想开就开</p>
+							<p>天各一方分身有术</p>
+							<p>会议纪要自动生成</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_06.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon07"></i>微日历<span class="saying">随身工作行事历</span></h2>
+							<p>当日任务清晰记</p>
+							<p>今日事情今日毕</p>
+							<p>历史记录莫忘记</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_07.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon08"></i>微调查<span class="saying">企业问卷实时测</span></h2>
+							<p>调查问卷随时发起</p>
+							<p>信息收集体贴民意</p>
+							<p>评估结果自动统计</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_08.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon09"></i>微申请<span class="saying">企业申请审批王</span></h2>
+							<p>常用申请一键快捷</p>
+							<p>专属审批会议室</p>
+							<p>实时批复不用等</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_09.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon10"></i>微网盘<span class="saying">企业私有云网盘</span></h2>
+							<p>文件查看与分享</p>
+							<p>信息安全统一控</p>
+							<p>随时随地随设备</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_10.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon11"></i>微合作<span class="saying">智能商务人脉通</span></h2>
+							<p>外部客户轻松添加</p>
+							<p>跨界合作亲如一家</p>
+							<p>敏感时刻特别提醒</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_11.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon12"></i>同事圈<span class="saying">企业内部分享圈</span></h2>
+							<p>知识文档即时导入</p>
+							<p>点赞互动发现高手</p>
+							<p>打造职场人气之星</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_12.png" />
+						</div>
+					</li>
+					<li>
+						<div class="title">
+							<h2 class="fun"><i class="icon icon13"></i>微投票<span class="saying">互动即时投票器</span></h2>
+							<p>活动内容征询投票</p>
+							<p>参与投票分享智慧</p>
+							<p>匿名投票确保真实</p>
+						</div>
+						<div class="fun_pic">
+							<img class="lazy" src="images/transparent.gif" data-original="images/fun_13.png" />
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!---->
+<div id="container">
+	<p id="navi" style="font-size:18px;height:30px;line-height:58px;font-wight:500;">微信扫描无法直接下载，请</p>
+	<p style="font-size:18px;height:30px;line-height:58px;">1.点击右上角按钮<img src="images/weixin/menu.png" width="34" height="29"/></p>
+	<img style="display:block; position:absolute; left:205px; top:60px;" src="images/weixin/jiantou.png" width="90" height="71" />
+	<p style="font-size:18px;height:30px;line-height:58px;">2.选择<img src="images/weixin/menu-browser.png" width="128" height="24" />即可正常下载</p>
+</div>
+<!---->
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/jquery.lazyload.min.js"></script>
+<script src="js/app/index.js"></script>
+<script>
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cspan id='cnzz_stat_icon_1253465894'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253465894' type='text/javascript'%3E%3C/script%3E"));
+(function(){
+	document.body.addEventListener("touchstart",function(){});
+	var windowW=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	var viewport=document.querySelector("meta[name=viewport]");
+	var u = navigator.userAgent;
+	var ad=u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;//android终端或者uc浏览器
+	function is_weixin() {
+		var ua = navigator.userAgent.toLowerCase();
+		if (ua.match(/MicroMessenger/i) == "micromessenger") {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	if(is_weixin() && ad && windowW<640 && (window.orientation==0 || window.orientation==180)){
+		viewport.setAttribute("content","width=device-width, initial-scale=0.55, maximum-scale=1.0, user-scalable=yes");
+		$(".openApp").click(function(e){
+			e.preventDefault();
+			$("#container").css("display", "block");
+			$('html, body').css({
+				'overflow': 'hidden',
+				'height': '100%'
+			});
+		});
+	}
+	function updateWin(){
+		var scale=620/685;
+		$(".pop").removeAttr("style");
+		$(".pop").hide();
+		windowW=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		windowW=(windowW>960) ? 960 : windowW;
+		$(".itd_page,#slide_show li").css({
+			width:windowW+"px"
+		});
+		if(window.orientation==0 || window.orientation==180){//竖屏
+			var imgHeight=$(".itd_page .content").height()-220;
+			var imgWidth=imgHeight*scale;
+			$(".itd_page .fun_pic").css({
+				height:imgHeight+"px",
+				width:imgWidth+"px",
+				marginRight:-(imgWidth/2)+"px"
+			});
+		}
+		if(window.orientation==90 || window.orientation==-90){//横屏
+			var imgHeight=$(".itd_page .content").height();
+			var imgWidth=imgHeight*scale;
+			$(".itd_page .fun_pic").css({
+				height:imgHeight+"px",
+				width:imgWidth+"px",
+				marginRight:0
+			});
+		}
+	}
+	var hm = document.createElement("script");
+	hm.src = "//hm.baidu.com/hm.js?0de06626090e9ae2892b061bb3d7aad9";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>
