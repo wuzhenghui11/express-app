@@ -1,119 +1,243 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-<head>
-	<title></title>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/css/style.min.css" />
-	<!--[if lt ie 9]>
-		<script src="js/lib/html5.min.js"></script> 
-	<![endif]-->
-</head>
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/css/style.min.css" />
+		<!--[if lt ie 9]>
+			<script src="js/lib/html5.min.js"></script> 
+		<![endif]-->
+		<script src="/js/lib/require.js"></script>
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- 引入组件库 -->
+	</head>
 
-<body>
-	<div id="list"></div>
-	<script src="/js/lib/require.js"></script>
-	<script>
-		require(["js/common"], function() {
-			require(["jquery", "vue"], function($, Vue) {
-				require(["vuex"], function(Vuex) {
+	<body>
+		<div id="app">
+			<p>{{ test }}</p>
+			<button @click="handleClick"></button>
+			<!-- <button-counter></button-counter> -->
+		</div>
+		<div id="list"></div>
+		<script>
+			require(["js/common"], function () {
+				require(["jquery", "vue"], function ($, Vue) {
+					require(["vuex"], function (Vuex, ele) {
+						function debounce(fn, delay) {
+							var timer = null;
+							return function () {
+								var context = this, args = arguments;
+								console.log(args);
+								clearTimeout(timer);
+								timer = setTimeout(function () {
+									fn.apply(context, args);
+								}, delay);
+							};
+						}
 
-					
-					let testJ = [{"name":1,"value":255},{"name":2,"value":350},{"name":3,"value":260},{"name":4,"value":762},{"name":5,"value":764},{"name":6,"value":457},{"name":7,"value":148},{"name":8,"value":167},{"name":9,"value":532},{"name":10,"value":673},{"name":11,"value":679},{"name":12,"value":356}];
-					let arr2 = [];
-					testJ.forEach((item) => {
-						arr2.push(item.value);
-					});
-					
+						let str2 = 'ABC';
+						let ad = [...str2];
+						console.log(ad);
 
-					for(let i = 0, len = arr2.length; i < len; i++){
-						for(let l = 0; l < len; l++){
-							if (arr2[l] < arr2[l + 1]) {
-								let temp = arr2[l];
-								arr2[l] =  arr2[l + 1];
-								arr2[l + 1] = temp;
+						window.onresize = debounce(function(){
+							console.log(12);
+						}, 250);
+
+						function W(a) {
+							this.a = a;
+						}
+
+						W.prototype.deepCopy = function(obj) {
+							var newObj = Array.isArray(obj) ? [] : {};
+							for (var item in obj) {
+								if (typeof obj[item] === "object" && obj[item] != null && !(obj[item] instanceof Date)) {
+									newObj[item] = this.deepCopy(obj[item]);
+								} else {
+									newObj[item] = obj[item];
+								}
+							}
+							return newObj;
+						}
+						W.prototype.printThis = function() {
+							console.log(this);
+						}
+
+						var w = new W(1);
+						var w2 = new W(2);
+
+						let a = w.deepCopy({
+							a: {
+								b: 1
+							}
+						});
+						// w2.printThis();
+						// w.printThis();
+
+
+
+
+						async function foo() {
+							await new Promise((resolve) => {
+								setTimeout(resolve, 3000);
+							});
+							console.log(123);
+							await new Promise((resolve) => {
+								setTimeout(resolve, 3000);
+							});
+							console.log(223);
+							return;
+						}
+						// foo().then(() => {
+						// 	console.log(2);
+						// });
+
+						class Pc {
+							constructor (x) {
+								this.name = x;
+								console.log(new.target.name);
 							}
 						}
-					}
-					console.log(arr2);
 
-					(function(){
-						console.log('------------------------');
-					})();
-					let [a, ...d] = [1, 2, 3];
-					console.log(Array.isArray(d));
-
-
-					String.prototype.trimTest = function () {
-						return this.replace(/^\s+|\s+$/, ' ');
-					}
-					var str = ' test'.trimTest();
-					
-					console.log(str);
-					
-					function test() {
-						console.log(Array.isArray(arguments));
-
-						var oldArr = Array.prototype.slice.apply(arguments);
-						for(var i = 0, len = oldArr.length; i < len; i++){
-						}
-					}
-
-					test(1,2,3,4,5);
-
-					var arr = [1,3,5,4,9,6,2,7,8];
-					for (let i = 0; i < arr.length; i++){
-						for(let l = 0; l < arr.length; l++){
-							if(arr[l] > arr[l+1]){
-								let temp = arr[l];
-								arr[l] = arr[l+1];
-								arr[l+1] = temp;
+						class Cc extends Pc {
+							constructor (x, y) {
+								super(x);
+								this.y = y;
 							}
 						}
-					}
+						console.dir(Cc);
 
-					// includes startsWith endsWith
-					// console.log('q'.padEnd(5, 'ab'));
-					// console.log('q'.padEnd(5, 'ab'));
+						/*let test11 = {};
+						console.dir(test11);
+						console.dir(Object);*/
+
+						let r = /a\d/y; // 必须从剩余的第一个位置开始(成功)否则null lastIndex为0
+						console.log('a1a2a3'.match(r)); // ["a1"]
+						console.log('a1a2a3'.match(r)); // ["a2"]
+						console.log('a1a2a3'.match(r)); // ["a3"]
+						console.log('a1a2a3'.match(r)); // null	
+						console.log('a1a2a3'.match(r)); // ["a1"]
+						let gr = /a\d/g; // 从剩余的第一个位置开始 成功为止 否则null
+						console.log('a1a2a3'.match(gr)); // ["a1", "a2", "a3"]
+						console.log(gr.exec('a1a2a3')); // ["a1"]
+						console.log(gr.exec('a1a2a3')); // ["a2"]
+						Vue.component('button-counter', {
+							data: function () {
+								return {
+									count: 0
+								}
+							},
+							template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+						});
+
+						var vm = new Vue({
+							el: '#app',
+							data: {
+								test: 11
+							},
+							methods: {
+								handleClick() {
+									this.test = 22;
+								}
+							},
+							created() {
+
+							}
+						});
+						vm.test = 'haha';
+						console.log(vm.$el.textContent);
+
+						Vue.nextTick(function () {
+							console.log(vm.$el.textContent);
+							// alert(11);
+						});
 
 
-					// number trunc sign cbrt
-					// console.log(parseInt('321x123'));
 
-					// componentWillMount componentDidMount componentWillReceiveProps
-					// showComponentUpdate Unmount
+						let obj = {
+							a: 1,
+							b: 2,
+							c: 3
+						}
+						// console.log('----', t);
 
-					var promise = new Promise((res, rej) => {
-						res(11);
-					});
 
-					promise.then((value) => {
-						console.log(value);
-					}).then((value) => {
 
-					});
+						String.prototype.trimTest = function () {
+							return this.replace(/^\s+|\s+$/, ' ');
+						}
+						var str = ' test'.trimTest();
 
-					for(var i = 0; i < 3; i++){
-						// 匿名函数会插入到主线程立即执行，并且匿名函数的参数(实参)已确定
-						// 所以setTimeout的回调方法中i的作用域在匿名函数内，而不是全局
-						(function(i){
-							setTimeout(function(){
-								console.log(i);
+						// console.log(str);
+
+						function test() {
+							// console.log(Array.isArray(arguments));
+
+							var oldArr = Array.prototype.slice.apply(arguments);
+							for (var i = 0, len = oldArr.length; i < len; i++) {}
+						}
+
+						test(1, 2, 3, 4, 5);
+
+						var arr = [1, 3, 5, 4, 9, 6, 2, 7, 8];
+						for (let i = 0; i < arr.length; i++) {
+							for (let l = 0; l < arr.length; l++) {
+								if (arr[l] > arr[l + 1]) {
+									let temp = arr[l];
+									arr[l] = arr[l + 1];
+									arr[l + 1] = temp;
+								}
+							}
+						}
+
+						// includes startsWith endsWith
+						// console.log('q'.padEnd(5, 'ab'));
+						// console.log('q'.padEnd(5, 'ab'));
+
+
+						// number trunc sign cbrt
+						// console.log(parseInt('321x123'));
+
+						// componentWillMount componentDidMount componentWillReceiveProps
+						// showComponentUpdate Unmount
+
+						var promise = new Promise((res, rej) => {
+							res(11);
+						});
+
+						promise.then((value) => {
+							// console.log(value);
+						}).then((value) => {
+
+						});
+
+						for (var i = 0; i < 3; i++) {
+							// 匿名函数会插入到主线程立即执行，并且匿名函数的参数(实参)已确定
+							// 所以setTimeout的回调方法中i的作用域在匿名函数内，而不是全局
+							(function (i) {
+								setTimeout(function () {
+									// console.log(i); // 0 1 2
+								}, 10);
+							})(i);
+							
+						}
+
+						for (let i = 0; i < 3; i++) {
+							setTimeout(function () {
+								// console.log(i); // 由于let的原因 0 1 2
 							}, 10);
-						})(i);
-						// 0 1 2
-					}
-
-					for(let i=0;i<3;i++){
-						setTimeout(function(){
-							console.log(i);
-						}, 10);
-						// 0 1 2
-					}
+						}
+						for (var i = 0; i < 3; i++) {
+							setTimeout(function () {
+								// console.log(i); // 三个3
+							}, 10);
+						}
+					});
 				});
 			});
-		});
-	</script>
-</body>
+
+		</script>
+	</body>
 
 </html>
