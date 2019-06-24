@@ -1,31 +1,20 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var ejs = require('ejs');
-var os = require('os');
+const express = require('express');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const ejs = require('ejs');
+const getIPAddress = require('./feature').getIPAddress;
 
-var app = express();
+const app = express();
 
-//获得电脑IP地址
-var getIPAddress = function(){
-  var interfaces = os.networkInterfaces();
-  for(var i in interfaces){
-    var iface =interfaces[i];
-    for(var l = 0; l  < iface.length; l++){
-      var alias = iface[l];
-      if(alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal){
-        return alias.address;
-      }
-    }
-  }
-}
-console.log("server running at http://" + getIPAddress() + ":3000");
+const router = require('./routes/index');
+const users = require('./routes/users');
+
+
+console.log("express server running at http://" + getIPAddress() + ":3000");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,18 +24,28 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 
+
+const options = {
+  setHeaders: function (res, path, stat) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+}
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'demo')));
+app.use(express.static(path.join(__dirname, 'public'), options));
+app.use(express.static(path.join(__dirname, 'demo'), options));
 
-app.use('/', routes);
+const cors = function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+};
+
+app.use('/test', [cors, router]);
 app.use('/users', users);
-app.use('/getData', routes);
 
 
 // catch 404 and forward to error handler

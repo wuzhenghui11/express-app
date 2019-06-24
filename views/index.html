@@ -25,30 +25,28 @@
 			require(["js/common"], function () {
 				require(["jquery", "vue"], function ($, Vue) {
 					require(["vuex"], function (Vuex, ele) {
-						function debounce(fn, delay) {
-							var timer = null;
-							return function () {
-								var context = this, args = arguments;
-								console.log(args);
-								clearTimeout(timer);
-								timer = setTimeout(function () {
-									fn.apply(context, args);
-								}, delay);
-							};
-						}
 
-						let str2 = 'ABC';
-						let ad = [...str2];
-						console.log(ad);
 
-						window.onresize = debounce(function(){
-							console.log(12);
-						}, 250);
 
+
+
+						$.ajax({
+							url: 'http://localhost:3000/test/getData',
+							dataType: 'json',
+							data: 'a=123',
+							type: 'get',
+							success: function(msg){
+								console.log(msg);
+							}
+						});
+						
+
+
+
+						/* -片段- */
 						function W(a) {
 							this.a = a;
 						}
-
 						W.prototype.deepCopy = function(obj) {
 							var newObj = Array.isArray(obj) ? [] : {};
 							for (var item in obj) {
@@ -63,10 +61,8 @@
 						W.prototype.printThis = function() {
 							console.log(this);
 						}
-
 						var w = new W(1);
 						var w2 = new W(2);
-
 						let a = w.deepCopy({
 							a: {
 								b: 1
@@ -74,10 +70,24 @@
 						});
 						// w2.printThis();
 						// w.printThis();
+						
+						/* -片段- */
+						function debounce(fn, delay) {
+							var timer = null;
+							return function () {
+								var context = this, args = arguments;
+								console.log(args);
+								clearTimeout(timer);
+								timer = setTimeout(function () {
+									fn.apply(context, args);
+								}, delay);
+							};
+						}
+						window.onresize = debounce(function(){
+							// console.log(12);
+						}, 250);
 
-
-
-
+						/* -片段- */
 						async function foo() {
 							await new Promise((resolve) => {
 								setTimeout(resolve, 3000);
@@ -89,10 +99,11 @@
 							console.log(223);
 							return;
 						}
-						// foo().then(() => {
-						// 	console.log(2);
-						// });
+						foo().then(() => {
+							// console.log(2);
+						});
 
+						/* -片段- */
 						class Pc {
 							constructor (x) {
 								this.name = x;
@@ -106,13 +117,10 @@
 								this.y = y;
 							}
 						}
-						console.dir(Cc);
+						// console.dir(Cc);
 
-						/*let test11 = {};
-						console.dir(test11);
-						console.dir(Object);*/
-
-						let r = /a\d/y; // 必须从剩余的第一个位置开始(成功)否则null lastIndex为0
+						/* -片段- */
+						/*let r = /a\d/y; // 必须从剩余的第一个位置开始(成功)否则null lastIndex为0
 						console.log('a1a2a3'.match(r)); // ["a1"]
 						console.log('a1a2a3'.match(r)); // ["a2"]
 						console.log('a1a2a3'.match(r)); // ["a3"]
@@ -121,7 +129,9 @@
 						let gr = /a\d/g; // 从剩余的第一个位置开始 成功为止 否则null
 						console.log('a1a2a3'.match(gr)); // ["a1", "a2", "a3"]
 						console.log(gr.exec('a1a2a3')); // ["a1"]
-						console.log(gr.exec('a1a2a3')); // ["a2"]
+						console.log(gr.exec('a1a2a3')); // ["a2"]*/
+
+						/* -片段- */
 						Vue.component('button-counter', {
 							data: function () {
 								return {
@@ -145,94 +155,85 @@
 
 							}
 						});
-						vm.test = 'haha';
-						console.log(vm.$el.textContent);
+						// vm.test = 'haha'; // 更新test
+						// console.log(vm.$el.textContent); // 11
 
+						// 在下次 DOM 更新循环结束之后执行延迟回调
 						Vue.nextTick(function () {
-							console.log(vm.$el.textContent);
-							// alert(11);
+							// console.log(vm.$el.textContent); // haha
 						});
 
 
-
-						let obj = {
-							a: 1,
-							b: 2,
-							c: 3
-						}
-						// console.log('----', t);
-
-
-
+						/* -片段- */
 						String.prototype.trimTest = function () {
 							return this.replace(/^\s+|\s+$/, ' ');
 						}
-						var str = ' test'.trimTest();
-
-						// console.log(str);
-
-						function test() {
+						// console.log(' test'.trimTest(););
+						
+						/* -片段- */
+						function argumentsTest() {
 							// console.log(Array.isArray(arguments));
-
 							var oldArr = Array.prototype.slice.apply(arguments);
 							for (var i = 0, len = oldArr.length; i < len; i++) {}
 						}
+						argumentsTest(1, 2, 3, 4, 5);
 
-						test(1, 2, 3, 4, 5);
-
-						var arr = [1, 3, 5, 4, 9, 6, 2, 7, 8];
-						for (let i = 0; i < arr.length; i++) {
-							for (let l = 0; l < arr.length; l++) {
-								if (arr[l] > arr[l + 1]) {
-									let temp = arr[l];
-									arr[l] = arr[l + 1];
-									arr[l + 1] = temp;
+						/* -片段- */
+						var sortArr = [1, 3, 5, 4, 9, 6, 2, 7, 8];
+						for (let i = 0; i < sortArr.length; i++) {
+							for (let l = 0; l < sortArr.length; l++) {
+								if (sortArr[l] > sortArr[l + 1]) {
+									let temp = sortArr[l];
+									sortArr[l] = sortArr[l + 1];
+									sortArr[l + 1] = temp;
 								}
 							}
 						}
 
-						// includes startsWith endsWith
-						// console.log('q'.padEnd(5, 'ab'));
-						// console.log('q'.padEnd(5, 'ab'));
-
-
-						// number trunc sign cbrt
-						// console.log(parseInt('321x123'));
-
-						// componentWillMount componentDidMount componentWillReceiveProps
-						// showComponentUpdate Unmount
-
+						/* -片段- */
+						/*includes startsWith endsWith
+						console.log('q'.padEnd(5, 'ab'));
+						console.log('q'.padEnd(5, 'ab'));
+						number trunc sign cbrt
+						console.log(parseInt('321x123'));
+						componentWillMount componentDidMount componentWillReceiveProps
+						showComponentUpdate Unmount*/
+						
+						/* -片段- */
 						var promise = new Promise((res, rej) => {
 							res(11);
 						});
-
 						promise.then((value) => {
 							// console.log(value);
 						}).then((value) => {
-
 						});
 
-						for (var i = 0; i < 3; i++) {
-							// 匿名函数会插入到主线程立即执行，并且匿名函数的参数(实参)已确定
-							// 所以setTimeout的回调方法中i的作用域在匿名函数内，而不是全局
-							(function (i) {
-								setTimeout(function () {
-									// console.log(i); // 0 1 2
-								}, 10);
-							})(i);
-							
-						}
+						/* -片段- */
+						let strToArr = 'ABC';
+						let sArr = [...strToArr];
 
-						for (let i = 0; i < 3; i++) {
-							setTimeout(function () {
-								// console.log(i); // 由于let的原因 0 1 2
-							}, 10);
-						}
-						for (var i = 0; i < 3; i++) {
-							setTimeout(function () {
-								// console.log(i); // 三个3
-							}, 10);
-						}
+						/* -片段- */
+						(function() {
+							for (var i = 0; i < 3; i++) {
+								// 匿名函数会插入到主线程立即执行，并且匿名函数的参数(实参)已确定
+								// 所以setTimeout的回调方法中i的作用域在匿名函数内，而不是全局
+								(function (i) {
+									setTimeout(function () {
+										// console.log(i); // 0 1 2
+									}, 10);
+								})(i);
+							}
+							for (let i = 0; i < 3; i++) {
+								setTimeout(function () {
+									// console.log(i); // 由于let的原因 0 1 2
+								}, 10);
+							}
+							for (var i = 0; i < 3; i++) {
+								setTimeout(function () {
+									// console.log(i); // 三个3
+								}, 10);
+							}
+						})();
 					});
 				});
 			});

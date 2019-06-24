@@ -9,7 +9,7 @@
 	"scripts": {
 		"start": "gulp server",
 		"test": "node ./build/test",
-		"dev": "gulp -sw",
+		"dev": "gulp server",
 		"gitcommit": "git add . && git commit -m 'update' && git push"
 	},
 	"dependencies": {
