@@ -7,7 +7,6 @@ router.get('/other', (req, res, next) => {
 });
 
 router.get('/getData', (req, res, next) => {
-	console.log(req);
 	res.json({
 		"state": 0,
 		"data": [
