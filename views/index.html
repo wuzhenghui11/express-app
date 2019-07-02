@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 	<head>
 		<title></title>
 		<meta charset="UTF-8">
@@ -19,27 +18,68 @@
 			<p>{{ test }}</p>
 			<button @click="handleClick"></button>
 			<!-- <button-counter></button-counter> -->
+			<input type="file" name="myFile" @change="fileChange"></input>
 		</div>
 		<div id="list"></div>
 		<script>
-			require(["js/common"], function () {
-				require(["jquery", "vue"], function ($, Vue) {
-					require(["vuex"], function (Vuex, ele) {
+			require(["js/common"], function() {
+				require(["jquery", "vue"], function($, Vue) {
+					require(["vuex"], function(Vuex, ele) {
 
+						/* -片段- */
+						Vue.component('button-counter', {
+							data: function () {
+								return {
+									count: 0
+								}
+							},
+							template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+						});
 
-
-						$.ajax({
-							url: 'http://localhost:3000/test/getData',
-							dataType: 'json',
-							data: 'a=123',
-							type: 'get',
-							success: function(msg){
-								console.log(msg);
+						var vm = new Vue({
+							el: '#app',
+							data: {
+								test: 11
+							},
+							methods: {
+								handleClick() {
+									this.test = 22;
+								},
+								createXMLHttpRequest() {
+									let xhr;
+									if (window.ActiveXObject) {
+										xhr = new ActiveXObject('Microsoft.XMLHTTP');
+									} else if (window.XMLHttpRequest) {
+										xhr = new XMLHttpRequest();
+									}
+									return xhr;
+								},
+								testGetData() {
+									$.ajax({
+										url: 'http://localhost:3000/test/getData',
+										dataType: 'json',
+										data: 'a=123',
+										type: 'get',
+										success: function(msg) {
+											// console.log(msg);
+										}
+									});
+								},
+								fileChange(val) {
+									console.log(val);
+								}
+							},
+							created() {
+								this.testGetData();
 							}
 						});
-						
+						// vm.test = 'haha'; // 更新test
+						// console.log(vm.$el.textContent); // 11
 
-
+						// 在下次 DOM 更新循环结束之后执行延迟回调
+						Vue.nextTick(function() {
+							// console.log(vm.$el.textContent); // haha
+						});
 
 						/* -片段- */
 						function W(a) {
@@ -76,7 +116,7 @@
 								var context = this, args = arguments;
 								console.log(args);
 								clearTimeout(timer);
-								timer = setTimeout(function () {
+								timer = setTimeout(function() {
 									fn.apply(context, args);
 								}, delay);
 							};
@@ -130,40 +170,7 @@
 						console.log(gr.exec('a1a2a3')); // ["a2"]*/
 
 						/* -片段- */
-						Vue.component('button-counter', {
-							data: function () {
-								return {
-									count: 0
-								}
-							},
-							template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
-						});
-
-						var vm = new Vue({
-							el: '#app',
-							data: {
-								test: 11
-							},
-							methods: {
-								handleClick() {
-									this.test = 22;
-								}
-							},
-							created() {
-
-							}
-						});
-						// vm.test = 'haha'; // 更新test
-						// console.log(vm.$el.textContent); // 11
-
-						// 在下次 DOM 更新循环结束之后执行延迟回调
-						Vue.nextTick(function () {
-							// console.log(vm.$el.textContent); // haha
-						});
-
-
-						/* -片段- */
-						String.prototype.trimTest = function () {
+						String.prototype.trimTest = function() {
 							return this.replace(/^\s+|\s+$/, ' ');
 						}
 						// console.log(' test'.trimTest(););
@@ -216,18 +223,18 @@
 								// 匿名函数会插入到主线程立即执行，并且匿名函数的参数(实参)已确定
 								// 所以setTimeout的回调方法中i的作用域在匿名函数内，而不是全局
 								(function (i) {
-									setTimeout(function () {
+									setTimeout(function() {
 										// console.log(i); // 0 1 2
 									}, 10);
 								})(i);
 							}
 							for (let i = 0; i < 3; i++) {
-								setTimeout(function () {
+								setTimeout(function() {
 									// console.log(i); // 由于let的原因 0 1 2
 								}, 10);
 							}
 							for (var i = 0; i < 3; i++) {
-								setTimeout(function () {
+								setTimeout(function() {
 									// console.log(i); // 三个3
 								}, 10);
 							}
