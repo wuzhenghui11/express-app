@@ -97,13 +97,13 @@ gulp.task('watch', function(done){
 });
 
 gulp.task('nodemon', function(){
+	opn('http://localhost:3002');
 	nodemon({
 		script: './bin/www'
 	})
 });
 
 gulp.task('server', gulp.series('watch', 'connect', 'nodemon', function(done){
-	opn('http://localhost:3002');
 	done()
 }));
 
