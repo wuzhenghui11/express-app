@@ -60,7 +60,7 @@
 										test2: [1, 2, 3]
 									};
 									let params2 = [121];
-									
+
 									/*axios.post('http://localhost:3000/postReq', {
 										firstName: 'Fred',
 										lastName: 'Flintstone'
@@ -72,10 +72,10 @@
 									$.ajax({
 										headers: {
 											'Accept': 'application/json,text/plain,*/*',
-											'content-type': 'application/json',
-											// 'cache-control': 'no-cache'
+											'Content-Type': 'application/json',
+											'cache-control': 'no-cache'
 										},
-										url: 'http://localhost:3000/postReq',
+										url: 'http://localhost:3000/test/getData',
 										dataType: 'JSON',
 										type: 'POST',
 										data: JSON.stringify(params),
