@@ -22,7 +22,7 @@ const autoCommit = function(){
 	        return;
 	    }
 	    console.log('stdout: ' + stdout);
-	})
+	});
 	childProcess.on('exit', function (code, signal) { 
 		console.log('子进程已退出，代码：' + code); 
 	});

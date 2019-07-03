@@ -1,10 +1,11 @@
-const express = require('express');
-const router = express.Router();
+const app = require('express');
+const router = app.Router();
 
 /* GET home page. */
 router.get('/other', (req, res, next) => {
 	res.render('index', { title: 'Express', name: 'test'});
 });
+
 
 router.get('/getData', (req, res, next) => {
 	res.json({

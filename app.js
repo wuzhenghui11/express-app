@@ -29,7 +29,18 @@ const options = {
   setHeaders: function (res, path, stat) {
     res.setHeader('Access-Control-Allow-Origin', '*');
   }
-}
+};
+const cors = function (req, res, next) {
+  console.log(req.get('content-type'));
+  req.accepts('text/plain');
+  req.accepts(['json', 'text']);
+  res.setHeader('access-control-allow-origin', '*');
+  res.setHeader('access-control-allow-headers', 'content-type,Content-Disposition');
+  res.setHeader('access-control-request-method', 'POST,GET');
+  res.setHeader('content-type', 'application/json;charset=UTF-8');
+  next();
+};
+
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -39,14 +50,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), options));
 app.use(express.static(path.join(__dirname, 'demo'), options));
 
-const cors = function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next();
-};
-
 app.use('/test', [cors, router]);
 app.use('/users', users);
+app.use('/postReq', cors);
 
+app.post('/postReq', (req, res) => {
+  console.log(req.get('content-type'));
+  res.json({
+    'state': 0,
+    'data': {
+      'name': 'json'
+    }
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
