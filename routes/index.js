@@ -17,7 +17,7 @@ router.post('/getData', (req, res, next) => {
 				"phoneNumber": "11111111111"
 			},
 			{
-				"name": "李四",
+				"name": "test",
 				"age": 20,
 				"phoneNumber": "99999999999"
 			}

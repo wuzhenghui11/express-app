@@ -26,6 +26,11 @@
 			require(['js/common'], function() {
 				require(['jquery', 'https://unpkg.com/axios/dist/axios.min.js', 'vue'], function($, axios, Vue) {
 					require(['vuex'], function(Vuex, ele) {
+
+						let func = function() {
+
+						};
+						console.dir(func);
 						/* -片段- */
 						Vue.component('button-counter', {
 							data: function () {
@@ -59,8 +64,6 @@
 										test: '121',
 										test2: [1, 2, 3]
 									};
-									let params2 = [121];
-
 									/*axios.post('http://localhost:3000/postReq', {
 										firstName: 'Fred',
 										lastName: 'Flintstone'
@@ -71,7 +74,6 @@
 									});*/
 									$.ajax({
 										headers: {
-											'Accept': 'application/json,text/plain,*/*',
 											'Content-Type': 'application/json',
 											'cache-control': 'no-cache'
 										},
@@ -80,9 +82,10 @@
 										type: 'POST',
 										data: JSON.stringify(params),
 										success: function(msg) {
-											// console.log(msg);
+											console.log(msg);
 										}
 									});
+									
 								},
 								fileChange(val) {
 									console.log(val);
