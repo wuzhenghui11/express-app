@@ -28,7 +28,8 @@ const autoCommit = function(){
 	});
 }
 
-const workURl = '../../work/envision/campus_recruitment/dream_par_stu_mob/';
+
+const workURl = '../../work/zhongan/20190722_463_1/src/main/resources/static/';
 
 const cors = function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,7 +38,7 @@ const cors = function (req, res, next) {
 
 gulp.task('connect', function(done) {
 	connect.server({
-		root: ['views', 'public', 'demo', workURl],
+		root: ['views', 'public', 'demo', '../express_app'],
 		port: 3002,
 		// host: 'localhost',
 		// https: {
@@ -88,11 +89,8 @@ gulp.task('html', function(done){
 gulp.task('watch', function(done){
 	gulp.watch('./javascript/*.js', gulp.parallel('jsmin'));
 	gulp.watch('./less/*.less', gulp.parallel('less'));
-	gulp.watch(['./views/*.html',
-		'./demo/*.html',
-		workURl + 'css/*.css',
-		workURl + 'html/*.html',
-		workURl + 'js/*.js'], gulp.parallel('html'));
+	gulp.watch(['./views/*.html', './demo/*.html'], gulp.parallel('html'));
+	gulp.watch([workURl + 'pages/fundsrouter/*.html', workURl + 'js/fundsrouter/*.js'], gulp.parallel('html'));
 	done();
 });
 

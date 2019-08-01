@@ -3,11 +3,11 @@
 	<head>
 		<title></title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/css/style.min.css" />
+		<link rel="stylesheet" href="../public/css/style.min.css" />
 		<!--[if lt ie 9]>
 			<script src="js/lib/html5.min.js"></script> 
 		<![endif]-->
-		<script src="/js/lib/require.js"></script>
+		<script src="../public/js/lib/require.js"></script>
 		<!-- 引入样式 -->
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 		<!-- 引入组件库 -->
@@ -21,11 +21,20 @@
 			<input type="file" name="myFile" @change="fileChange"></input>
 		</div>
 		<div id="list"></div>
-
 		<script>
-			require(['js/common'], function() {
+			require(['../public/js/common'], function() {
 				require(['jquery', 'https://unpkg.com/axios/dist/axios.min.js', 'vue'], function($, axios, Vue) {
 					require(['vuex'], function(Vuex, ele) {
+						var Enum;
+						(function (Enum) {
+						    Enum[Enum["A"] = 0] = "A";
+						})(Enum || (Enum = {}));
+						console.log(Enum);
+
+						// 分治法
+						// 快速排序
+						// 归并排序
+						// 快速傅立叶变换
 
 						let func = function() {
 
@@ -264,7 +273,6 @@
 					});
 				});
 			});
-
 		</script>
 	</body>
 

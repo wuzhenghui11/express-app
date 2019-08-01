@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: 'js/lib', // 根目录
+	baseUrl: '../public/js/lib', // 根目录
 	paths:{
 		jquery: 'jquery',
 		backbone: 'backbone',

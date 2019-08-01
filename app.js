@@ -33,7 +33,7 @@ const options = {
 const cors = function (req, res, next) {
   req.accepts('text/plain');
   req.accepts(['json', 'text']);
-  res.setHeader('access-control-allow-origin', '*');
+  // res.setHeader('access-control-allow-origin', '*');
   res.setHeader('access-control-allow-headers', 'content-type,content-disposition,cache-control');
   res.setHeader('access-control-request-method', 'POST,GET');
   res.setHeader('content-type', 'application/json;charset=UTF-8');
@@ -48,6 +48,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), options));
 app.use(express.static(path.join(__dirname, 'demo'), options));
+app.use(express.static(path.join(__dirname, 'views'), options));
+app.use(express.static(path.join(__dirname, '../express_app'), options));
 
 app.use('/test', [cors, router]);
 app.use('/users', users);

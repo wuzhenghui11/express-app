@@ -10,7 +10,8 @@
 		"start": "gulp server",
 		"test": "node ./build/test",
 		"dev": "gulp server",
-		"gitcommit": "git add . && git commit -m 'update' && git push"
+		"gitcommit": "git add . && git commit -m 'update' && git push",
+		"tsctest": "rm ./demo/test.js && tsc ./demo/test.ts"
 	},
 	"dependencies": {
 		"archiver": "^2.1.1",
@@ -26,6 +27,7 @@
 		"serve-favicon": "^2.5.0"
 	},
 	"devDependencies": {
+		"element-theme-chalk": "^2.10.1",
 		"gulp": "^4.0.0",
 		"gulp-clean-css": "^2.0.12",
 		"gulp-concat": "^2.6.1",
