@@ -16,7 +16,7 @@
 	<body>
 		<div id="app">
 			<p>{{ test }}</p>
-			<button @click="handleClick"></button>
+			<button @click="handleClick">click</button>
 			<!-- <button-counter></button-counter> -->
 			<input type="file" name="myFile" @change="fileChange"></input>
 		</div>
@@ -25,21 +25,28 @@
 			require(['../public/js/common'], function() {
 				require(['jquery', 'https://unpkg.com/axios/dist/axios.min.js', 'vue'], function($, axios, Vue) {
 					require(['vuex'], function(Vuex, ele) {
+						let obLength = {
+							length: 3
+						}
+						function Oct() {
+							console.log(arguments);
+						}
+						let ob = Object.create(Oct.prototype);
+						console.dir(ob);
+						let tArr = [];
+						Oct.apply(ob, [tArr]);
+
+
 						var Enum;
 						(function (Enum) {
 						    Enum[Enum["A"] = 0] = "A";
 						})(Enum || (Enum = {}));
-						console.log(Enum);
+						// console.log(Enum);
 
 						// 分治法
 						// 快速排序
 						// 归并排序
 						// 快速傅立叶变换
-
-						let func = function() {
-
-						};
-						console.dir(func);
 						/* -片段- */
 						Vue.component('button-counter', {
 							data: function () {
@@ -53,7 +60,12 @@
 						var vm = new Vue({
 							el: '#app',
 							data: {
-								test: 11
+								test: 11,
+								hz: {
+									ad: {
+										奥迪: 123
+									}
+								}
 							},
 							methods: {
 								handleClick() {
@@ -91,10 +103,8 @@
 										type: 'POST',
 										data: JSON.stringify(params),
 										success: function(msg) {
-											console.log(msg);
 										}
 									});
-									
 								},
 								fileChange(val) {
 									console.log(val);
@@ -102,6 +112,7 @@
 							},
 							created() {
 								this.testGetData();
+								console.log((!!this.hz && !!this.hz.ad));
 							}
 						});
 						// vm.test = 'haha'; // 更新test
@@ -130,6 +141,9 @@
 						W.prototype.printThis = function() {
 							console.log(this);
 						}
+						W.test = function() {
+							console.log(this);
+						}
 						var w = new W(1);
 						var w2 = new W(2);
 						let a = w.deepCopy({
@@ -137,6 +151,7 @@
 								b: 1
 							}
 						});
+						// W.test();
 						// w2.printThis();
 						// w.printThis();
 						
@@ -145,7 +160,6 @@
 							var timer = null;
 							return function () {
 								var context = this, args = arguments;
-								console.log(args);
 								clearTimeout(timer);
 								timer = setTimeout(function() {
 									fn.apply(context, args);

@@ -24,6 +24,23 @@ router.post('/getData', (req, res, next) => {
 		]
 	});
 });
+router.post('/getData2', (req, res, next) => {
+	res.json({
+		"state": 0,
+		"data": [
+			{
+				"name": "Jack",
+				"age": 18,
+				"phoneNumber": "11111111111"
+			},
+			{
+				"name": "test",
+				"age": 20,
+				"phoneNumber": "99999999999"
+			}
+		]
+	});
+});
 
 
 

@@ -33,8 +33,9 @@ const options = {
 const cors = function (req, res, next) {
   req.accepts('text/plain');
   req.accepts(['json', 'text']);
-  // res.setHeader('access-control-allow-origin', '*');
+  res.setHeader('access-control-allow-origin', '*');
   res.setHeader('access-control-allow-headers', 'content-type,content-disposition,cache-control');
+  res.setHeader('access-control-max-age', '1800');
   res.setHeader('access-control-request-method', 'POST,GET');
   res.setHeader('content-type', 'application/json;charset=UTF-8');
   next();
