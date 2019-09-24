@@ -3,6 +3,7 @@
 	<head>
 		<title></title>
 		<meta charset="UTF-8">
+		<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
 		<link rel="stylesheet" href="../public/css/style.min.css" />
 		<!--[if lt ie 9]>
 			<script src="js/lib/html5.min.js"></script> 
@@ -11,11 +12,38 @@
 		<!-- 引入样式 -->
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 		<!-- 引入组件库 -->
+		<style type="text/css">
+			.abc:first-line{
+				color: yellow;
+				writing-mode: tb-rl;
+				zoom: 1;
+			}
+			.abc:first-letter{
+				color: red;
+			}
+		</style>
 	</head>
 
-	<body>
+	<body style="padding: 0;">
+		<style>
+			.demo p{
+				overflow: hidden;
+				width: 200px;
+				/*display: -webkit-box;*/
+				white-space: nowrap;
+				text-overflow: '...更多';
+				/*-webkit-line-clamp: 2;*/
+				 /*-webkit-box-orient: vertical;*/
+			}
+		</style>
+		<div class="demo"><p>这是一句非常非常长的话，被用来做text-overflow属性测试。这是一句非常非常长的话，被用来做text-overflow属性测试。这是一句非常非常长的话，被用来做text-overflow属性测试。</p></div>
 		<div id="app">
-			<p>{{ test }}</p>
+			<div class="abc" style="width: 100px; height: 100px; background-color: green;">
+				<div>11212</div>
+				<div>2</div>
+			</div>
+			<!-- <div style="width: 100vw; height: 100vh; position: fixed; z-index: -1; background-color: orange;"></div> -->
+			<!-- <p>{{ test }}</p> -->
 			<button @click="handleClick">click</button>
 			<!-- <button-counter></button-counter> -->
 			<input type="file" name="myFile" @change="fileChange"></input>
@@ -24,19 +52,278 @@
 		<script>
 			require(['../public/js/common'], function() {
 				require(['jquery', 'https://unpkg.com/axios/dist/axios.min.js', 'vue'], function($, axios, Vue) {
-					require(['vuex'], function(Vuex, ele) {
-						let obLength = {
-							length: 3
-						}
-						function Oct() {
-							console.log(arguments);
-						}
-						let ob = Object.create(Oct.prototype);
-						console.dir(ob);
-						let tArr = [];
-						Oct.apply(ob, [tArr]);
+					require(['vuex'], function(Vuex) {
+						(function() {
+							class Point {
+								constructor () {
+
+								}
+								toString () {
+
+								}
+							}
+							console.log(Object.keys(Point.prototype));
 
 
+
+							class Foo {
+								constructor(...args) {
+									this.args = args;
+								}
+								* [Symbol.iterator]() { // 为类部署iterator 返回一个Foo类的默认遍历器
+									for (let arg of this.args) {
+										yield arg;
+									}
+								}
+							}
+
+							for (let x of new Foo('hello', 'world')) {
+								console.log(x);
+							}
+
+							var clock = function* () {
+								while (true) {
+									console.log('Tick!');
+									yield;
+									console.log('Tock!');
+									yield;
+								}
+							}();
+							// clock.next();
+							// clock.next();
+							// clock.next();
+							function* fibonacci() {
+								let [prev, curr] = [0, 1];
+								for (;;) {
+									yield curr;
+									[prev, curr] = [curr, prev + curr];
+								}
+							}
+
+							for (let n of fibonacci()) {
+								if (n > 1000) break;
+								// console.log(n);
+							}
+
+							function* foo(x) {
+								var y = 2 * (yield (x + 1));
+								var z = yield (y / 3);
+								return (x + y + z);
+							}
+							var f1 = foo(5);
+							f1.next() // Object{value:6, done:false}
+							f1.next() // Object{value:NaN, done:false}
+							f1.next() // Object{value:NaN, done:true}
+
+							var f2 = foo(5);
+							f2.next() // { value:6, done:false }
+							f2.next(12) // { value:8, done:false }
+							f2.next(13) // { value:42, done:true }
+
+							function* helloWorldGenerator() {
+								yield 'h';
+								yield 'w';
+								return 'end';
+							}
+							let hlg = helloWorldGenerator();
+							// console.log(hlg.next()); // {value: "h", done: false}
+							// console.log(hlg.next()); // {value: "w", done: false}
+							// console.log(hlg.next()); // {value: "end", done: true}
+
+							// 对象添加iterator 属性
+
+							let iteratorObj = {
+								* [Symbol.iterator]() {
+									yield 'h';
+									yield 'w';
+								}
+							};
+
+							for (let x of iteratorObj) {
+								// console.log(x);
+							}
+
+							for (let [key, value] of Object.entries({'a': 1, 'b': 2})) {
+								// console.log(`${key}->${value}`);
+							}
+
+
+							var someString = 'hi';
+							// console.log(typeof someString[Symbol.iterator]); // function
+
+							// 
+							function Tree(left, label, right) {
+								this.left = left;
+								this.label = label;
+								this.right = right;
+							}
+
+							// 下面生成二叉树
+							function make(array) {
+								// 判断是否为叶节点
+								if (array.length == 1) return new Tree(null, array[0], null);
+								return new Tree(make(array[0]), array[1], make(array[2]));
+							}
+							let tree = make([[['a'], 'b', ['c']], 'd', [['e'], 'f', ['g']]]);
+
+							// 反射
+							var reflectTest = new Proxy({}, {
+								get(target, name) {
+									console.log('get', target, name);
+									return Reflect.get(target, name);
+								},
+								set(target, name, value, receiver) {
+									var success = Reflect.set(target, name, value, receiver);
+									if (success) {
+										// console.log('property ' + name + ' on ' + target + ' set to ' + value);
+									}
+									return success;
+								},
+								deleteProperty(target, name) {
+									console.log('delete' + name);
+									return Reflect.deleteProperty(target, name);
+								},
+								has(target, name) {
+									console.log('has' + name);
+									return Reflect.has(target, name);
+								}
+							});
+							reflectTest.aa = '123';
+							// console.log(reflectTest.aa); //123
+							// 代理
+							const dom = new Proxy({}, {
+								get(target, property) {
+									return function(attrs = {}, ...children) {
+										const el = document.createElement(property);
+										for (let prop of Object.keys(attrs)) {
+											el.setAttribute(prop, attrs[prop]);
+										}
+										for (let child of children) {
+											if (typeof child === 'string') {
+												child = document.createTextNode(child);
+											}
+											el.appendChild(child);
+										}
+										return el;
+									}
+								}
+							});
+							const el = dom.div({},
+								'Hello, my name is ',
+								dom.a({href: '//example.com'}, 'Mark'),
+								'. I like:',
+								dom.ul({},
+									dom.li({}, 'The web'),
+									dom.li({}, 'Food'),
+									dom.li({}, '…actually that\'s it')
+								)
+							);
+
+							function invariant (key, action) {
+								// console.log('_prop'[0]); // _
+								if (key[0] === '_') {
+									// throw new Error(`Invalid attempt to ${action} private "${key}" property`);
+								}
+							}
+							const target = {};
+							const proxy2 = new Proxy(target, {
+								get (target, key) {
+									invariant(key, 'get');
+									return target[key];
+								},
+								set (target, key, value) {
+									invariant(key, 'set');
+									target[key] = value;
+									return true;
+								}
+							});
+							proxy2._prop
+
+							var proxyObj = new Proxy({}, {
+								get: function(target, key, receiver) {
+									// console.log(target, key, receiver);
+									return Reflect.get(target, key, receiver);
+								},
+								set: function (target, key, value, receiver) {
+									// console.log(target, key, value, receiver);
+									return Reflect.set(target, key, value, receiver);
+								}
+							});
+							proxyObj.aa = 1;
+							// console.log(proxyObj.aa);
+
+
+							// set 和 map
+
+							let arr2 = [[1, 2], [2, 3]];
+							let weakSet = new WeakSet(arr2);
+							// console.log(weakSet); // 由于匿名函数执行完 内部变量arr2随着匿名函数被销毁 所以没有值
+
+
+							let set = new Set([2, 4, 6]);
+							// console.log(set);
+
+							// console.log(({[Symbol.toStringTag]: 'test'}).toString()); // [object test]
+
+							let arr1 = [1, 2];
+							// arr1[Symbol.isConcatSpreadable] = true;
+							// console.log([3, 4].concat(arr1));
+
+							class MyArray extends Array {
+								static get [Symbol.species]() {
+									return Array;
+								}
+							}
+
+							const arr = new MyArray(1, 2, 3);
+							const b = arr.map(x => x);
+							const c = arr.filter(x => x > 1);
+
+							// console.log(b instanceof MyArray); // true
+							// console.log(c instanceof MyArray); // true
+							// console.log(b);
+
+						})();
+						(function() {
+
+							// Object.prototype.foo = 'test'; // 有vue 会报错
+							const myObj = {};
+							Object.setPrototypeOf(myObj, new Proxy({}, {
+								set: function(obj, prop, value, receiver) {
+									obj[prop] = receiver;
+								}
+							}));
+							// console.log(myObj.foo); // test
+							myObj.foo = 'bar';
+							// console.log(myObj.foo === myObj); // true
+
+						})();
+						/* 片段 */
+						(function() {
+							let aObj = {
+								aa: '11'
+							}
+
+							let sObj = {
+								ss() {
+									console.log(super.aa);
+								}
+							}
+							Object.setPrototypeOf(sObj, aObj);
+							// sObj.ss(); // 11
+							// console.dir(sObj);
+
+
+							function Oct() {
+								console.log(arguments);
+							}
+							let ob = Object.create(Oct.prototype);
+							// console.dir(ob);
+							let tArr = [];
+							// Oct.apply(ob, [tArr]);
+						})();
+
+						// 实现枚举
 						var Enum;
 						(function (Enum) {
 						    Enum[Enum["A"] = 0] = "A";
@@ -60,12 +347,7 @@
 						var vm = new Vue({
 							el: '#app',
 							data: {
-								test: 11,
-								hz: {
-									ad: {
-										奥迪: 123
-									}
-								}
+								test: 11
 							},
 							methods: {
 								handleClick() {
@@ -112,7 +394,6 @@
 							},
 							created() {
 								this.testGetData();
-								console.log((!!this.hz && !!this.hz.ad));
 							}
 						});
 						// vm.test = 'haha'; // 更新test
@@ -175,11 +456,11 @@
 							await new Promise((resolve) => {
 								setTimeout(resolve, 3000);
 							});
-							console.log(123);
+							// console.log(123);
 							await new Promise((resolve) => {
 								setTimeout(resolve, 3000);
 							});
-							console.log(223);
+							// console.log(223);
 							return;
 						}
 						foo().then(() => {
