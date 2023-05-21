@@ -14,7 +14,7 @@ const router = require('./routes/index');
 const users = require('./routes/users');
 
 
-console.log("express server running at http://" + getIPAddress() + ":3000");
+console.log("express server running at http://" + getIPAddress() + ":3006");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,9 +50,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), options));
 app.use(express.static(path.join(__dirname, 'demo'), options));
 app.use(express.static(path.join(__dirname, 'views'), options));
-app.use(express.static(path.join(__dirname, '../express_app'), options));
+app.use(express.static(path.join(__dirname, '../express-app'), options));
 
-app.use('/test', [cors, router]);
+app.use('/api', [cors, router]);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

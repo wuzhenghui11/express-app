@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="../public/css/style.min.css" />
+		<!--[if lt ie 9]>
+			<script src="js/lib/html5.min.js"></script> 
+		<![endif]-->
+		<script src="../public/js/lib/require.js"></script>
+	</head>
+
+	<body style="padding: 0;">
+		<p>asdf</p>
+		<button id="btn1">p</button>
+		<a href="http://localhost:3007/throwError.html" target="_blank" name="haha">asds</a>
+		<div id="app">
+			
+		</div>
+		<script>
+			require(['../public/js/common'], function () {
+				require(['jquery', 'vue', 'https://turbo.github.io/js/turbo.js'], function($, Vue, turbojs) {
+					require(['vuex', 'f2', 'underscore'], function(Vuex, F2, _) {
+
+
+
+						if (turbojs) {
+							var foo = turbojs.alloc(1e6);
+
+							for (var i = 0; i < 1e6; i++) foo.data[i] = i;
+
+							// print first five elements
+							console.log(foo.data.subarray(0, 5));
+						}
+
+
+
+
+
+						console.log(!document.all)
+						console.log(`1\\d2`)
+						
+
+						// bdhtml = window.document.body.innerHTML;
+						// sprnstr = '<!--startprint-->'; // 开始打印标识字符串有17个字符
+						// eprnstr = "<!--endprint-->"; // 结束打印标识字符串
+						// prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr)+17); // 从开始打印标识之后的内容
+						// prnhtml = prnhtml.substring(0,prnhtml.indexOf(eprnstr)); // 截取开始标识和结束标识之间的内容
+						// window.document.body.innerHTML = prnhtml; // 把需要打印的指定内容赋给body.innerHTML
+						// window.print(); // 调用浏览器的打印功能打印指定区域
+						// window.document.body.innerHTML = bdhtml; // 最后还原页面
+						const btn = document.querySelector('#btn1')
+
+						btn.addEventListener('click', function () {
+							var wind = window.open('',
+							'newwindow',
+							'height=600, width=1200, top=10, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+							wind.document.body.innerHTML = list;
+							wind.print()
+						}, false)
+
+						// const list = document.querySelector('#list').innerHTML
+						// var iframe = document.createElement('iframe')
+						// var iframeEle = document.body.appendChild(iframe)
+						// var iframedocument = iframeEle.contentDocument
+						// console.log(iframeEle.contentWindow)
+						// console.log(iframedocument)
+						// console.log(iframeEle.contentWindow.document)
+						// var frameBody = iframedocument.body;
+						// frameBody.innerHTML = list;
+						
+						
+						/**
+						 * indexedDB
+						 */
+
+						var request = window.indexedDB.open('databaseName', 1)
+						request.onerror = function (event) {
+							console.log('1212')
+						}
+						var db
+						request.onsuccess = function (event) {
+							// db = request.result
+							// console.log(db)
+							console.log('数据库打开成功')
+						}
+
+						request.onupgradeneeded = function (event) {
+							db = event.target.result
+							console.log(db)
+							var objectStore
+							if (!db.objectStoreNames.contains('person')) {
+								objectStore = db.createObjectStore('person', {
+									keyPath: 'id'
+								})
+							}
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>

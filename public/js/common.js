@@ -13,9 +13,13 @@ require.config({
 		zclip: 'jquery.zclip',
 		raphael: 'Raphael',
 		vue: 'vue',
-		vuex: 'vuex'
+		vuex: 'vuex',
+		f2: 'f2'
 	},
 	shim:{
+		'f2': {
+			exports: 'F2'
+		},
 		'vue': {
 			exports: 'Vue'
 		},

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="../public/css/style.min.css" />
+		<!--[if lt ie 9]>
+			<script src="js/lib/html5.min.js"></script> 
+		<![endif]-->
+		<script src="../public/js/lib/require.js"></script>
+	</head>
+
+	<body style="padding: 0;">
+		<div id="app" style="width: 200px; height: 200px; border: 1px dotted gray;">
+			
+		</div>
+		<script>
+			require(['../public/js/common'], function () {
+				require(['vue'], function(Vue) {
+					const app = document.querySelector('#app')
+
+					document.addEventListener('drop', function (e) {  //拖离
+						e.preventDefault()
+					})
+
+					document.addEventListener('dragleave', function (e) {  //拖后放
+						e.preventDefault()
+					})
+
+					document.addEventListener('dragenter', function (e) {  //拖进
+						e.preventDefault()
+					})
+					
+					document.addEventListener('dragover', function (e) {  //拖来拖去
+						e.preventDefault()
+					})
+
+					app.addEventListener('drop', (e) => {
+						console.log(e.dataTransfer.files) // 能拿到
+						var files = e.dataTransfer.files
+						//方法二,这种方法另辟蹊径,巧妙的运用了forEach函数,经实验可成功获取文件
+						var files = [];
+						[].forEach.call(e.dataTransfer.files, function(file) {
+						files.push(file)
+						},false)
+						console.log(files)
+
+					})
+				});
+			});
+		</script>
+	</body>
+
+</html>

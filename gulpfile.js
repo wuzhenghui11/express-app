@@ -38,8 +38,8 @@ const cors = function (req, res, next) {
 
 gulp.task('connect', function(done) {
 	connect.server({
-		root: ['views', 'public', 'demo', '../express_app'],
-		port: 3002,
+		root: ['views', 'public', 'demo', '../express-app'],
+		port: 3007,
 		// host: 'localhost',
 		// https: {
 		// 	get: (function(){})
@@ -95,7 +95,7 @@ gulp.task('watch', function(done){
 });
 
 gulp.task('nodemon', function(){
-	opn('http://localhost:3002');
+	opn('http://localhost:3007');
 	nodemon({
 		script: './bin/www'
 	})
