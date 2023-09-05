@@ -21,7 +21,6 @@ function resolve(dir) {
 // const workPath = [workPupPath + 'pages/fundsrouter/*.html', workPupPath + 'js/fundsrouter/*.js']
 
 // js地址
-
 const jsFilePath = [resolve('public/js/common/*.js')]
 // less文件地址
 const lessFilePath = resolve('public/less/*.less')
@@ -33,6 +32,7 @@ const outPutPath = {
 	css: resolve('assets'),
 }
 
+// 处理less
 gulp.task('lessTask', function(done){
 	gulp.src(lessFilePath)
 		.pipe(less())
@@ -44,7 +44,7 @@ gulp.task('lessTask', function(done){
 		.pipe(connect.reload())
 	done()
 })
-
+// 处理JS
 gulp.task('jsminTask', function(done){
 	gulp.src(jsFilePath)
 		.pipe(sourcemaps.init())
@@ -60,13 +60,14 @@ gulp.task('jsminTask', function(done){
 		.pipe(connect.reload())
 	done()
 })
-
+// html reload
 gulp.task('htmlTask', function(done){
 	gulp.src(htmlFilePath)
 		.pipe(connect.reload())
 	done()
 })
 
+// 监听文件 执行不同任务
 gulp.task('watchTask', function(done){
 	gulp.watch(jsFilePath, gulp.parallel('jsminTask'))
 	gulp.watch(
@@ -95,6 +96,7 @@ gulp.task('watchTask', function(done){
 // 	})
 // }
 
+// 请求相应头
 const cors = function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Origin', '*')
 	next()
@@ -122,7 +124,6 @@ gulp.task('nodemonTask', function (done) {
 	opn('http://localhost:3007')
 	done()
 })
-
 
 gulp.task(
 	'default',
