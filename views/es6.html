@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	</head>
+	<body>
+    <p>6</p>
+		<script>
+			console.log(String.fromCharCode(0x20BB7))
+      console.log(String.fromCodePoint(0x20BB7))
+
+      console.log(`this \nis ${1}`)
+      console.log(String.raw`this \nis ${1}`)
+
+      console.log('\u01D1', '\u004F', '\u030C', '\u004F\u030C')
+      console.log('\u01D1'.normalize() === '\u004F\u030C'.normalize())
+
+      console.log('123abc456'.replaceAll(/(\d+)([a-z]+)(\d+)/g, (match, p1, p2, p3, offset, string) => {
+        console.log(match, offset, string)
+        return [p1, p2, p3].join('-')
+      }))
+
+      const str = 'abcde'
+      console.log(str.at(5), str.charAt(5), str.at(-1), str.charAt(-1))
+
+      // charCodeAt 和 codePointAt 区别 https://www.jianshu.com/p/bfbc650b3203
+
+      // String.fromCharCode() 不能识别码点大于0xFFFF的字符
+      // String.fromCodePoint  可以识别大于0xFFFF的字符
+
+      // ---------
+      // 字符串'😊'只有一个“笑脸”符号，但是通过length属性发现，“长度”为2，
+      // string.length到底表示什么？答：码元的个数
+      // 什么是码元？码元就是编码的最小单元，UTF-16和UCS-2的码元为16个比特（2字节）。
+      // 也就是说，'😊'使用了两个码元，也就是4字节进行编码。
+      // 通过string.charCodeAt(index)方法可以返回对应位置的码元。
+
+      // 那什么是码点呢？码点就是对应字符的编码，通过对应编码规则，将编码转换为1个或多个码元
+      // 通过string.codePointAt(index)方法可以返回对应位置的码点。
+
+      // https://blog.csdn.net/qq2071114140/article/details/119153204
+      // ------------
+
+      // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String#utf-16_%E5%AD%97%E7%AC%A6%E3%80%81unicode_%E7%A0%81%E4%BD%8D%E5%92%8C%E5%AD%97%E7%B4%A0%E7%B0%87
+
+
+      let symbol = Symbol('s1') // 每次都是新的Symbol
+      let symbol2 = Symbol.for('s2') // 每次都是同一个Symbol
+      console.log(typeof symbol, symbol.description)
+      console.log(typeof symbol2, symbol2.description, Symbol.keyFor(symbol2))
+
+
+      let ws = new WeakSet([[1, 2], [3, 4]])
+      console.log(ws)
+
+      let map = new Map([['name', '张三'], ['title', 'Author']])
+      map.set('age', 29)
+      console.log(map.get('age'))
+
+      const vmkey = {}
+      let wm = new WeakMap([[vmkey, 11]])
+      wm.set(symbol, 22)
+      console.log(wm.get(vmkey))
+      console.log(wm.get(symbol))
+
+      let target = {};
+      let wr = new WeakRef(target)
+      wr.deref() // 目标对象被清除则 undefined
+
+      const registry = new FinalizationRegistry((sv) => {
+        console.log('theObject 被清除了', sv)
+      })
+      // registry.register(theObject, "some value", theObject)
+      // registry.unregister(theObject)
+
+      const tObj = {}
+      const proxy = new Proxy(tObj, {
+        get: function (target, propKey, receiver) {
+          console.log(`getting ${propKey}!`)
+          return Reflect.get(target, propKey, receiver);
+        },
+        set: function (target, propKey, value, receiver) {
+          console.log(`setting ${propKey}!`)
+          // target[propKey] = value
+          // return true
+          return Reflect.set(target, propKey, value, receiver)
+        }
+      })
+      proxy.a = 1
+      console.log(proxy.a, tObj.a)
+
+      function Aa () {
+        this.a = 1
+      }
+      Aa.prototype.text = function () {
+        
+      }
+
+
+      function Bb () {
+        Aa.call(this)
+      }
+
+      
+      Bb.prototype = Aa.prototype
+      Bb.prototype.constructor = Bb
+
+      class A {
+      }
+
+      class B extends A {
+      }
+
+      console.dir(B)
+      console.dir(Bb)
+
+
+      for (let [key, value] of ['a', 'b'].entries()) {
+        console.log(key, '-', value)
+      }
+
+
+      const emptStr = ''
+			const a1 = emptStr || 0
+			const a2 = emptStr ?? 0
+			
+			console.log(a1, a2)
+			console.log(!!emptStr)
+
+			let exponentiation = 3
+			exponentiation **= 3
+			console.log(exponentiation)
+			
+
+			let commaOperatorTest = 1
+			commaOperatorTest = (commaOperatorTest++, 3)
+			console.log(commaOperatorTest)
+
+			const deleteOpreator = {
+				pro1: 1,
+				pro2: {
+					a: 3
+				}
+			}
+			const test = deleteOpreator.pro2
+			delete deleteOpreator.pro2
+
+			console.log(deleteOpreator, test)
+
+
+			const pduan = ''
+			if (pduan || pduan === 0) {
+				console.log(11)
+			}
+		</script>
+	</body>
+</html>

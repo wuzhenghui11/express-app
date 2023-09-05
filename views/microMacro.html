@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	</head>
+	<body>
+		<script>
+			console.log('script start');
+      setTimeout(function() {
+        console.log('setTimeout');
+      }, 0);
+
+      Promise.resolve().then(function() {
+        console.log('promise1');
+      }).then(function() {
+        console.log('promise2');
+      });
+      console.log('script end');
+		</script>
+	</body>
+</html>

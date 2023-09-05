@@ -1,10 +1,10 @@
-const app = require('express');
-const router = app.Router();
+const app = require('express')
+const router = app.Router()
 
 /* GET home page. */
 router.get('/other', (req, res, next) => {
 	res.render('index', { title: 'Express', name: 'test'});
-});
+})
 
 
 router.post('/getData', (req, res, next) => {
@@ -22,8 +22,9 @@ router.post('/getData', (req, res, next) => {
 				"phoneNumber": "99999999999"
 			}
 		]
-	});
-});
+	})
+})
+
 router.post('/getData2', (req, res, next) => {
 	console.log(req.body.testHanzi);
 	res.json({
@@ -40,8 +41,8 @@ router.post('/getData2', (req, res, next) => {
 				"phoneNumber": "99999999999"
 			}
 		]
-	});
-});
+	})
+})
 
 router.get('/lunarNewYear', (req, res, next) => {
 	res.json({
@@ -58,9 +59,9 @@ router.get('/lunarNewYear', (req, res, next) => {
 				"phoneNumber": "99999999999"
 			}
 		]
-	});
-});
+	})
+})
 
 
 
-module.exports = router;
+module.exports = router

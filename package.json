@@ -7,9 +7,9 @@
 	"license": "ISC",
 	"description": "",
 	"scripts": {
-		"start": "gulp server",
+		"start": "gulp",
 		"test": "node ./build/test",
-		"dev": "gulp server",
+		"dev": "gulp",
 		"gitcommit": "git add . && git commit -m 'update' && git push",
 		"tsctest": "rm ./demo/test.js && tsc ./demo/test.ts"
 	},

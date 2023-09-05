@@ -6,7 +6,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
-const getIPAddress = require('./feature').getIPAddress;
+const getIPAddress = require('./utils/serverUtils').getIPAddress;
 
 const app = express();
 
@@ -30,6 +30,7 @@ const options = {
     res.setHeader('Access-Control-Allow-Origin', '*');
   }
 };
+
 const cors = function (req, res, next) {
   req.accepts('text/plain');
   req.accepts(['json', 'text']);
@@ -48,7 +49,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), options));
-app.use(express.static(path.join(__dirname, 'demo'), options));
+app.use(express.static(path.join(__dirname, 'assets'), options));
+app.use(express.static(path.join(__dirname, 'utils'), options));
 app.use(express.static(path.join(__dirname, 'views'), options));
 app.use(express.static(path.join(__dirname, '../express-app'), options));
 
