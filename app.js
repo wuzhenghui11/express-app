@@ -10,8 +10,8 @@ const getIPAddress = require('./utils/serverUtils').getIPAddress;
 
 const app = express();
 
-const router = require('./routes/index');
-const users = require('./routes/users');
+const router = require('./api/index');
+const users = require('./api/users');
 
 
 console.log("express server running at http://" + getIPAddress() + ":3006");
@@ -43,7 +43,7 @@ const cors = function (req, res, next) {
 };
 
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,7 +54,9 @@ app.use(express.static(path.join(__dirname, 'utils'), options));
 app.use(express.static(path.join(__dirname, 'views'), options));
 app.use(express.static(path.join(__dirname, '../express-app'), options));
 
+// ----------------------------------------------------------------
 app.use('/api', [cors, router]);
+
 app.use('/users', users);
 
 // catch 404 and forward to error handler

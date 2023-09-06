@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	</head>
+	<body>
+    <p>6</p>
+		<script>
+      function createWorker(f) {
+        var blob = new Blob(['(' + f.toString() +')()']);
+        var url = window.URL.createObjectURL(blob);
+        var worker = new Worker(url);
+        return worker;
+      }
+
+      var worker = createWorker(function (e) {
+        // importScripts('script1.js', 'script2.js');
+
+        self.addEventListener('message', function (e) {
+          self.postMessage('You said: ' + e.data)
+          if (e.data === 'stop') {
+            self.close()
+          }
+        }, false)
+        
+        setTimeout(() => {
+          self.postMessage('1212')
+        }, 1000)
+      });
+
+      worker.postMessage('11')
+
+      //  转移数据使用下面写法
+
+      // Transferable Objects 格式
+      // worker.postMessage(arrayBuffer, [arrayBuffer]);
+
+      // 例子
+      // var ab = new ArrayBuffer(1);
+      // worker.postMessage(ab, [ab]);
+
+      worker.onmessage = function (event) {
+        console.log(event.data);
+      }
+
+      worker.terminate()
+		</script>
+	</body>
+</html>

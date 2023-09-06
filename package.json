@@ -21,13 +21,13 @@
 		"ejs": "~2.3.3",
 		"express": "^4.16.3",
 		"graceful-fs": "^4.1.11",
+		"mongodb": "^6.0.0",
 		"morgan": "^1.9.1",
 		"natives": "^1.1.6",
 		"os": "^0.1.1",
 		"serve-favicon": "^2.5.0"
 	},
 	"devDependencies": {
-		"element-theme-chalk": "^2.10.1",
 		"gulp": "^4.0.0",
 		"gulp-clean-css": "^2.0.12",
 		"gulp-concat": "^2.6.1",
