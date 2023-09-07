@@ -14,14 +14,6 @@
 		const { createApp, onMounted } = Vue
 		const app = createApp({
 			setup () {
-				function fibonacci(x) {
-					return x <= 1 ? x : fibonacci(x - 1) + fibonacci(x - 2);
-				}
-
-				onMounted(() => {
-					console.log(fibonacci(3))
-				})
-
 				return {
 
 				}
