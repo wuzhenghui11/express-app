@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="assets/base.min.css" />
+</head>
+<body>
+	<script defer>
+		try {
+			throw new Error('1')
+			console.log('2') // 不会打印
+		} catch (e) {
+			console.log(e)
+		}
+	</script>
+</body>
+</html>

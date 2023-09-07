@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="assets/base.min.css" />
+</head>
+<body>
+	<p>如果跳转过来target 为 _blan</p>
+	<button id="closeBtn">关闭当前窗口</button>
+	<script defer>
+		const closeBtn = document.querySelector('#closeBtn')
+		closeBtn.addEventListener('click', () => {
+			window.close()
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="assets/base.min.css" />
+  <script src="public/js/library/require.js"></script>
+</head>
+<body>
+  <div id="list">要打印的内容</div>
+  <button id="printBtn">print</button>
+  <script>
+    // bdhtml = window.document.body.innerHTML;
+    // sprnstr = '<!--startprint-->'; // 开始打印标识字符串有17个字符
+    // eprnstr = "<!--endprint-->"; // 结束打印标识字符串
+    // prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr)+17); // 从开始打印标识之后的内容
+    // prnhtml = prnhtml.substring(0,prnhtml.indexOf(eprnstr)); // 截取开始标识和结束标识之间的内容
+    // window.document.body.innerHTML = prnhtml; // 把需要打印的指定内容赋给body.innerHTML
+    // window.print(); // 调用浏览器的打印功能打印指定区域
+    // window.document.body.innerHTML = bdhtml; // 最后还原页面
+
+    // 打印按钮
+    const printBtn = document.querySelector('#printBtn')
+    
+    //获取要打印的内容
+    const list = document.querySelector('#list').innerHTML
+    // 创建iframe
+    var iframe = document.createElement('iframe')
+    var iframeEle = document.body.appendChild(iframe)
+    var iframedocument = iframeEle.contentDocument
+
+    console.log(iframeEle.contentWindow)
+    console.log(iframeEle.contentWindow.document)
+    console.log(iframedocument)
+
+    var frameBody = iframedocument.body;
+    // 将获取的内容放入iframe body
+    frameBody.innerHTML = list;
+
+    // 打印按钮事件
+    printBtn.addEventListener('click', function () {
+      // 打开一个新窗口
+      var wind = window.open('',
+      'newwindow',
+      'height=600, width=1200, top=20, left=20, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no'
+      );
+      wind.document.body.innerHTML = list;
+      wind.print()
+    }, false);
+  </script>
+</body>
+</html>

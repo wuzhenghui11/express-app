@@ -1,9 +1,36 @@
-body {
-	padding: 0;
+body, ul, li, p {
 	margin: 0;
+	padding: 0;
+}
+
+body {
 	font: 12px "Lucida Grande",Helvetica,Arial,sans-serif;
 	background-color: white;
+	color: rgb(111, 109, 109);
 }
+
+ul, li { list-style: none; }
+
 a {
-	color: #00B7FF;
+	margin: 2px 0;
+	text-decoration: none;
+	// color: #00B7FF;
+	color: rgb(2, 141, 141);
+	font-size: 13px;
+	display: inline-block;
+}
+a:active, a:hover, a:focus {
+	color: rgb(5, 186, 186);
+	opacity: 1;
+}
+
+button {
+	color: rgb(111, 109, 109);
+	margin-right: 2px;
+	border-radius: 2px;
+	border: 1px solid rgba(1, 36, 31, .2);
+	cursor: pointer;
+}
+button:last-of-type {
+	margin-right: 0;
 }

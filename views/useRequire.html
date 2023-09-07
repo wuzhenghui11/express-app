@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="assets/base.min.css" />
+	<script src="public/js/library/require.js"></script>
+</head>
+
+<body>
+	<script>
+		require(['public/js/requireConfig'], function () {
+			require(['underscore', 'https://turbo.github.io/js/turbo.js'], function (_, turbojs) {
+				if (turbojs) {
+					var foo = turbojs.alloc(1e6);
+					for (var i = 0; i < 1e6; i++) foo.data[i] = i;
+					// print first five elements
+					console.log(foo.data.subarray(0, 5));
+				}
+			})
+		})
+	</script>
+</body>
+</html>
