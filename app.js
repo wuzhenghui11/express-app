@@ -10,8 +10,10 @@ const getIPAddress = require('./utils/serverUtils').getIPAddress;
 
 const app = express();
 
-const router = require('./api/index');
-const users = require('./api/users');
+require('./controller/webSocket.js');
+// api
+const router = require('./api/index.js');
+const users = require('./api/users.js');
 
 
 console.log("express server running at http://" + getIPAddress() + ":3006");
