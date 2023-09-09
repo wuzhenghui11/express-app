@@ -71,4 +71,4 @@ typings/
 #生成资源
 /assets/
 #外部的包
-/public/js/library
+#/public/js/library
