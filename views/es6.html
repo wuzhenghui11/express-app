@@ -9,28 +9,316 @@
 	<body>
     <p>6</p>
 		<script>
-			console.log(String.fromCharCode(0x20BB7))
-      console.log(String.fromCodePoint(0x20BB7))
+      /**
+      (function() {
 
-      console.log(`this \nis ${1}`)
-      console.log(String.raw`this \nis ${1}`)
+      })();
+      */
+      /***  let const ***/
+      /*
+        // var会变量提升
+        console.log(a) // undefined
+        var a = 10
+        // 上面代码实际运行是会是
+        
+        var a
+        console.log(a) // undefined
+        a = 10
 
-      console.log('\u01D1', '\u004F', '\u030C', '\u004F\u030C')
-      console.log('\u01D1'.normalize() === '\u004F\u030C'.normalize())
+        // 不存在变量提升
+        {
+          let a = 10;
+          var b = 1;
+        }
+        // console.log(a) 报错 ReferenceError: a is not defined.
+        // console.log(b) 1
 
-      console.log('123abc456'.replaceAll(/(\d+)([a-z]+)(\d+)/g, (match, p1, p2, p3, offset, string) => {
-        console.log(match, offset, string)
-        return [p1, p2, p3].join('-')
-      }))
+        // 设置循环变量的那部分是一个父作用域
+        for (let i = 0; i < 10; i++) {
+          // 循环体内部是一个单独的子作用域
+        }
+        // console.log(i) // ReferenceError: i is not defined
+      */
+      
+      (function() {
+        var a = [];
+        for (var i = 0; i < 10; i++) {
+          a[i] = function () {
+            console.log(i);
+          };
+        }
+        a[6]() // 10
+        // 上面代码中，变量i是var命令声明的，在全局范围内都有效，所以全局只有一个变量i。每一次循环，变量i的值都会发生改变
+        // 而循环内被赋给数组a的函数内部的console.log(i)，里面的i指向的就是全局的i。也就是说，所有数组a的成员里面的i，
+        // 指向的都是同一个i，导致运行时输出的是最后一轮的i的值，也就是 10
 
-      const str = 'abcde'
-      console.log(str.at(5), str.charAt(5), str.at(-1), str.charAt(-1))
+        // 如果使用let，声明的变量仅在块级作用域内有效，最后输出的是 6
+        for (let i = 0; i < 10; i++) {
+          a[i] = function () {
+            console.log(i);
+          };
+        }
+        a[6]() // 6
+        // 上面代码中，变量i是let声明的，当前的i只在本轮循环有效，所以每一次循环的i其实都是一个新的变量，所以最后输出的是6
+        // 你可能会问，如果每一轮循环的变量i都是重新声明的，那它怎么知道上一轮循环的值，从而计算出本轮循环的值？
+        // 这是因为 JavaScript 引擎内部会记住上一轮循环的值，初始化本轮的变量i时，就在上一轮循环的基础上进行计算。
+      })();
+
+      (function() {
+        // 块级别作用域和函数声明
+        // 为什么需要块级作用域？
+        // ES5 只有全局作用域和函数作用域，没有块级作用域，这带来很多不合理的场景。
+        // 第一种场景，内层变量可能会覆盖外层变量。
+        /* 
+          // ES5 环境
+          function f() { console.log('I am outside!'); }
+          (function () {
+            function f() { console.log('I am inside!'); }
+            if (false) {
+            }
+            f();
+          }());
+          
+          // 上面代码在 ES5 中运行，会得到“I am inside!”，
+          // 因为在if内声明的函数f会被提升到函数头部，实际运行的代码如下。
+          function f() { console.log('I am outside!'); }
+          (function () {
+            function f() { console.log('I am inside!'); }
+            if (false) {
+            }
+            f();
+          }());
+        */
+        
+        /*
+          // 浏览器的 ES6 环境
+          function f() { console.log('I am outside!'); }
+          (function () {
+            if (false) {
+              // 重复声明一次函数f
+              function f() { console.log('I am inside!'); }
+            }
+            f();
+          }());
+          // Uncaught TypeError: f is not a function
+          // 原来，如果改变了块级作用域内声明的函数的处理规则，显然会对老代码产生很大影响。
+          // 为了减轻因此产生的不兼容问题，ES6 在附录 B里面规定，浏览器的实现可以不遵守上面的规定，有自己的行为方式
+          // -允许在块级作用域内声明函数。
+          // -函数声明类似于var，即会提升到全局作用域或函数作用域的头部。
+          // -同时，函数声明还会提升到所在的块级作用域的头部。
+
+          // 上面的例子实际运行的代码如下
+          function f() { console.log('I am outside!'); }
+          (function () {
+            var f = undefined;
+            if (false) {
+              function f() { console.log('I am inside!'); }
+            }
+            f();
+          }());
+          // Uncaught TypeError: f is not a function
+        */
+      })();
+
+      (function() {
+        // 暂时性死区 temporal dead zone，简称 TDZ
+        // var tmp = 123;
+        // if (true) {
+        //   tmp = 'abc'; // ReferenceError
+        //   let tmp;
+        // }
+        // “暂时性死区”也意味着typeof不再是一个百分之百安全的操作。
+        // 报错而不是 undefined
+        // typeof x; // ReferenceError
+        // let x;
+
+        // 不允许重复声明
+        // 报错
+        // let a = 10;
+        // var a = 1;
+
+        // 第一种写法，报错
+        // if (true) let x = 1;
+
+        // 第二种写法，不报错
+        /* 
+          if (true) {
+            let x = 1;
+          }
+        */
+      })();
+
+      // const
+      // const foo;
+      // SyntaxError: Missing initializer in const declaration
+      // const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动。
+
+      // ES6 声明变量的六种方法
+      // var function let const import class
+
+      // 顶层对象的属性
+      // 上面代码中，顶层对象的属性赋值与全局变量的赋值，是同一件事。
+
+      // 顶层对象的属性与全局变量挂钩，被认为是 JavaScript 语言最大的设计败笔之一。
+      // 这样的设计带来了几个很大的问题，首先是没法在编译时就报出变量未声明的错误，
+      // 只有运行时才能知道（因为全局变量可能是顶层对象的属性创造的，而属性的创造是动态的）；
+      // 其次，程序员很容易不知不觉地就创建了全局变量（比如打字出错）；
+      // 最后，顶层对象的属性是到处可以读写的，这非常不利于模块化编程。
+      // 另一方面，window对象有实体含义，指的是浏览器的窗口对象，顶层对象是一个有实体含义的对象，也是不合适的。
+      // ES6 为了改变这一点，一方面规定，为了保持兼容性，var命令和function命令声明的全局变量，依旧是顶层对象的属性；
+      // 另一方面规定，let命令、const命令、class命令声明的全局变量，不属于顶层对象的属性。也就是说，从 ES6 开始，全局变量将逐步与顶层对象的属性脱钩。
+
+      /*
+        var a = 1;
+        如果在 Node 的 REPL 环境，可以写成 global.a
+        或者采用通用方法，写成 this.a
+        window.a // 1
+        let b = 1;
+        window.b // undefined
+        上面代码中，全局变量a由var命令声明，所以它是顶层对象的属性；全局变量b由let命令声明，所以它不是顶层对象的属性，返回undefined。
+      */
+
+
+      /*** 解构 ***/
+
+      /* 
+        // 不完全解构但是可以成功
+        let [x, y] = [1, 2, 3];
+        x // 1
+        y // 2
+
+        let [a, [b], d] = [1, [2, 3], 4];
+        a // 1
+        b // 2
+        d // 4
+      */
+
+      // 报错
+      // 如果等号的右边不是数组（或者严格地说，不是可遍历的结构，参见《Iterator》一章），那么将会报错。
+      // let [foo] = 1;
+      // let [foo] = false;
+      // let [foo] = NaN;
+      // let [foo] = undefined;
+      // let [foo] = null;
+      // let [foo] = {};
+      
+
+      // 事实上，只要某种数据结构具有 Iterator 接口，都可以采用数组形式的解构赋值。
+      // let [x, y, z] = new Set(['a', 'b', 'c']);
+      // x // "a"
+      (function() {
+        function* fibs() {
+          let a = 0;
+          let b = 1;
+          while (true) {
+            yield a;
+            // [1, 1] [1, 2] [2, 3] [3, 5] [5, 8] [8, 13]
+            [a, b] = [b, a + b];
+          }
+        }
+        const n = fibs()
+        console.log(n.next())
+        console.log(n.next())
+        console.log(n.next())
+        console.log(n.next())
+
+        let [first, second, third, fourth, fifth, sixth, ee] = fibs();
+        console.log(first, second, third, fourth, fifth, sixth)
+      })()
+
+      // 解构赋值允许指定默认值。
+      // 注意，ES6 内部使用严格相等运算符（===），判断一个位置是否有值。所以，只有当一个数组成员严格等于undefined，默认值才会生效。
+      /*
+        let [x = 1] = [undefined];
+        x // 1
+
+        let [x = 1] = [null];
+        x // null
+
+        // 如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在用到的时候，才会求值。
+        function f() {
+          console.log('aaa');
+        }
+        let [x = f()] = [1];
+        上面代码中，因为x能取到值，所以函数f根本不会执行。上面的代码其实等价于下面的代码。
+        let x;
+        if ([1][0] === undefined) {
+          x = f();
+        } else {
+          x = [1][0];
+        }
+
+        // 交换变量
+        let x = 1;
+        let y = 2;
+        [x, y] = [y, x];
+      */
+
+      /*** 字符串扩展 ***/
+      // 1.字符的 Unicode 表示法
+
+      // 2.字符串的遍历器接口
+
+      // for (let codePoint of 'foo') {
+      //   console.log(codePoint)
+      // }
+
+      // 3.直接输入 U+2028 和 U+2029
+
+      // 4.JSON.stringify() 的改造
+
+      // 5.模板字符串
+
+      // 6.实例：模板编译
+
+      // 7.标签模板
+      // alert`hello` 等同于 alert(['hello'])
+      // let a = 5;
+      // let b = 10;
+      // tag`Hello ${ a + b } world ${ a * b }` 等同于 tag(['Hello ', ' world ', ''], 15, 50);
+      // 第一个参数：['Hello ', ' world ', '']
+      // 第二个参数: 15
+      // 第三个参数：50
+
+
+      // 8.模板字符串的限制
+      // 前面提到标签模板里面，可以内嵌其他语言。但是，模板字符串默认会将字符串转义，导致无法嵌入其他语言。
+
+      /*** 字符串的新增方法 ***/
+
+      // String.fromCodePoint()
+      // String.raw()
+      // 实例方法：codePointAt()
+      // 实例方法：normalize()
+      // 实例方法：includes(), startsWith(), endsWith()
+      // 实例方法：repeat()
+      // 实例方法：padStart()，padEnd()
+      // 实例方法：trimStart()，trimEnd()
+      // 实例方法：matchAll()
+      // 实例方法：replaceAll()
+      // 实例方法：at()
+
+      // console.log(String.fromCharCode(0x20BB7))
+      // console.log(String.fromCodePoint(0x20BB7))
+
+      // console.log(`this \nis ${1}`)
+      // console.log(String.raw`this \nis ${1}`)
+
+      // console.log('\u01D1', '\u004F', '\u030C', '\u004F\u030C')
+      // console.log('\u01D1'.normalize() === '\u004F\u030C'.normalize())
+
+      // console.log('123abc456'.replaceAll(/(\d+)([a-z]+)(\d+)/g, (match, p1, p2, p3, offset, string) => {
+      //   console.log(match, offset, string)
+      //   return [p1, p2, p3].join('-')
+      // }))
+
+      // const str = 'abcde'
+      // console.log(str.at(5), str.charAt(5), str.at(-1), str.charAt(-1))
 
       // charCodeAt 和 codePointAt 区别 https://www.jianshu.com/p/bfbc650b3203
 
       // String.fromCharCode() 不能识别码点大于0xFFFF的字符
       // String.fromCodePoint  可以识别大于0xFFFF的字符
-
       // ---------
       // 字符串'😊'只有一个“笑脸”符号，但是通过length属性发现，“长度”为2，
       // string.length到底表示什么？答：码元的个数
@@ -43,8 +331,97 @@
 
       // https://blog.csdn.net/qq2071114140/article/details/119153204
       // ------------
+      // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String#utf-16_字符、unicode_码位和字素簇
 
-      // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String#utf-16_%E5%AD%97%E7%AC%A6%E3%80%81unicode_%E7%A0%81%E4%BD%8D%E5%92%8C%E5%AD%97%E7%B4%A0%E7%B0%87
+
+
+
+      /*** 箭头函数 ***/
+      // 箭头函数没有自己的this对象（详见下文）。
+      // 不可以当作构造函数，也就是说，不可以对箭头函数使用new命令，否则会抛出一个错误。
+      // 不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
+      // 不可以使用yield命令，因此箭头函数不能用作 Generator 函数。
+
+      /*
+      上面四点中，最重要的是第一点。对于普通函数来说，内部的this指向函数运行时所在的对象，
+      但是这一点对箭头函数不成立。它没有自己的this对象，
+      内部的this就是定义时上层作用域中的this。也就是说，
+      箭头函数内部的this指向是固定的，相比之下，普通函数的this指向是可变的
+      */
+      // 不适用场合
+      /* 
+        const cat = {
+          lives: 9,
+          jumps: () => {
+            this.lives--;
+          }
+        }
+        上面代码中，cat.jumps()方法是一个箭头函数，这是错误的。调用cat.jumps()时，如果是普通函数，该方法内部的this指向cat；
+        如果写成上面那样的箭头函数，使得this指向全局对象，因此不会得到预期结果。
+
+        这是因为对象不构成单独的作用域，导致jumps箭头函数定义时的作用域就是全局作用域。
+        
+        三个作用域 全局作用域 函数作用域 块级作用域
+
+        globalThis.s = 21;
+        const obj = {
+          s: 42,
+          m: () => console.log(this.s)
+        };
+        obj.m() // 21
+
+        上面例子中，obj.m()使用箭头函数定义。
+        JavaScript 引擎的处理方法是，先在全局空间生成这个箭头函数，然后赋值给obj.m，
+        这导致箭头函数内部的this指向全局对象，所以obj.m()输出的是全局空间的21，而不是对象内部的42。上面的代码实际上等同于下面的代码。
+
+        globalThis.s = 21;
+        globalThis.m = () => console.log(this.s);
+        const obj = {
+          s: 42,
+          m: globalThis.m
+        };
+        obj.m() // 21
+
+        第二个场合是需要动态this的时候，也不应使用箭头函数。
+        var button = document.getElementById('press');
+        button.addEventListener('click', () => {
+          this.classList.toggle('on');
+        });
+        上面代码运行时，点击按钮会报错，因为button的监听函数是一个箭头函数，导致里面的this就是全局对象。如果改成普通函数，this就会动态指向被点击的按钮对象。
+
+        另外，如果函数体很复杂，有许多行，或者函数内部有大量的读写操作，不单纯是为了计算值，这时也不应该使用箭头函数，而是要使用普通函数，这样可以提高代码可读性。
+      */
+      // catch 命令的参数省略
+      /*
+        try {
+          // ...
+        } catch (err) {
+          // 处理错误
+        }
+      */
+      // 很多时候，catch代码块可能用不到这个参数。
+      // 但是，为了保证语法正确，还是必须写。ES2019 做出了改变，允许catch语句省略参数。
+      /*
+        try {
+          // ...
+        } catch {
+          // ...
+        }
+      */
+
+
+
+
+      /*** 运算符扩展 ***/
+
+      // 指数运算符
+      // 链判断运算符
+      // Null 判断运算符
+      // 逻辑赋值运算符
+      // #!命令
+
+
+      
 
 
       let symbol = Symbol('s1') // 每次都是新的Symbol
@@ -155,6 +532,7 @@
 			if (pduan || pduan === 0) {
 				console.log(11)
 			}
+
 		</script>
 	</body>
 </html>

@@ -22,6 +22,7 @@
 	<body>
 		<div id="app">
 			<p>devicePixelRatio:{{ viewData }}</p>
+			<p v-for="item in arr">{{ item }}</p>
 			<!-- <div class="abc" style="width: 100px; height: 100px; display: block;">
 				<div>11212</div>
 				<div>2</div>
@@ -61,6 +62,7 @@
 				},
 				setup () {
 					const viewData = ref(window.devicePixelRatio)
+					const arr = ref([1, 2, 3])
 
 					function createXMLHttpRequest () {
 						let xhr;
@@ -92,17 +94,38 @@
 							console.log(response, 'response')
 						})
 					}
-					function onGetDataBtnClick () { testGetData () }
+					function onGetDataBtnClick () {
+						arr.value[2] = 5
+						testGetData()
+					}
+
+					const stateArr = []
+					let cur = 0
+					function useState (init) {
+						stateArr[cur] = (stateArr[cur] && stateArr[cur].value) || ref(init)
+						const yongjiuIndex = cur
+						function setState (erInit) {
+							stateArr[yongjiuIndex].value = erInit
+						}
+						return [ref(stateArr[cur++]), setState]
+					}
+					const [index, setIndex] = useState(1)
+					const [strrr, setStrrr] = useState('strrr')
+					setIndex(3)
+					console.log(stateArr, index.value)
+
 
 					onMounted(() => {
 						console.log(
 							'获得对象指定属性的描述', 
 							Object.getOwnPropertyDescriptor({ propName: () => 11 }, 'propName')
 						)
+						
 						// const getDataBtn = document.querySelector('button')
 					})
 
 					return {
+						arr,
 						viewData,
 						onGetDataBtnClick
 					}
