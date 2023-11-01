@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebpack_app_react=self.webpackChunkwebpack_app_react||[]).push([[177],{648:function(e,a,c){c.r(a);var t=c(959);a.default=function(){return t.createElement("h1",{className:"color",style:{fontSize:"10px"}},"Home11")}}}]);

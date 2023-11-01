@@ -12,6 +12,8 @@ const connect = require('gulp-connect')
 const path = require('path')
 const opn = require('opn')
 
+const process = require('node:process')
+
 function resolve(dir) {
   return path.join(__dirname, '/', dir)
 }
@@ -25,7 +27,7 @@ const jsFilePath = [resolve('public/js/common/*.js')]
 // less文件地址
 const lessFilePath = resolve('public/less/*.less')
 // html文件地址
-const htmlFilePath = [resolve('views/*.html'), resolve('views/**/*.html')]
+const htmlFilePath = [resolve('views/*.html'), resolve('views/**/*.html'), resolve('dist/*.html'),]
 
 const outPutPath = {
 	js: resolve('assets'),
@@ -103,8 +105,14 @@ const cors = function (req, res, next) {
 }
 
 gulp.task('connectTask', function(done) {
+	const defaultDir = ['views', 'public', 'assets', '../express-app']
+	if (process.env.STATIC_DIR === 'dist') {
+		defaultDir.unshift('dist')
+	}
+	console.log(defaultDir)
 	connect.server({
-		root: ['views', 'public', 'assets', '../express-app'],
+		name: 'aa',
+		root: defaultDir,
 		port: 3007,
 		middleware: function(connect, opt) {
 			return [cors]

@@ -54,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'public'), options));
 app.use(express.static(path.join(__dirname, 'assets'), options));
 app.use(express.static(path.join(__dirname, 'utils'), options));
 app.use(express.static(path.join(__dirname, 'views'), options));
+app.use(express.static(path.join(__dirname, 'dist'), options));
 app.use(express.static(path.join(__dirname, '../express-app'), options));
 
 // ----------------------------------------------------------------

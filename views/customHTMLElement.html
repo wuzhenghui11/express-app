@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="assets/base.min.css" />
+	</head>
+	<body>
+		<script>
+			class CustomHTMLElement {
+				constructor(element) {
+					this.element = element;
+				}
+
+				get html() {
+					return this.element.innerHTML;
+				}
+
+				set html(value) {
+					this.element.innerHTML = value;
+				}
+			}
+
+			var descriptor = Object.getOwnPropertyDescriptor(CustomHTMLElement.prototype, 'html')
+
+			console.log(descriptor)
+			console.dir(CustomHTMLElement)
+			console.log('set' in descriptor)  // true
+		</script>
+	</body>
+</html>

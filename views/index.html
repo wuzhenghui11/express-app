@@ -4,43 +4,71 @@
 	<title></title>
 	<meta charset="UTF-8">
 	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
-	<link rel="stylesheet" href="assets/base.min.css" />
-	<!-- <script src="assets/main.min.js"></script> -->
+	<link rel="stylesheet" href="http://localhost:3007/assets/base.min.css" />
 	<style type="text/css"></style>
 </head>
 <body>
-	<ul>
-		<li><a href="es6.html">es6</a></li>
-		<li><a href="suiji.html">随记</a></li>
-		<li><a href="microMacro.html">microMacro</a></li>
-		<li><a href="suanfa.html">算法</a></li>
-
-		<li><a href="indexdb.html">indexdb</a></li>
-
-		<li><a href="canvas.html">canvas</a></li>
-		<li><a href="clientHeight.html">获取元素高度</a></li>
-		<li><a href="errorObject.html">错误对象</a></li>
-		<li><a href="h5Download.html">h5 download</a></li>
-		
-		<li><a href="requestAnimationFrame.html">requestAnimationFrame</a></li>
-		<li><a href="print.html">print</a></li>
-		<li><a href="useRequire.html">useRequire</a></li>
-		<li><a href="webSocket.html">webSocket</a></li>
-		<li><a href="webWorker.html">webWorker</a></li>
-		<li><a href="windowClose.html" target="_blank" name="new tab">窗口关闭</a></li>
-	</ul>
+	<div style="overflow: visible;">
+		<div>菜单</div>
+		<div style="position: sticky; top: 0; left: 0; right: 0; height: 20px; background-color: rgba(135, 128, 128, .3);"></div>
+		<ul>
+			<li><a href="http://localhost:3007/es6.html">es6</a></li>
+			<li><a href="http://localhost:3007/suiji.html">随记</a></li>
+			<li><a href="http://localhost:3007/microMacro.html">microMacro</a></li>
+			<li><a href="http://localhost:3007/suanfa.html">算法</a></li>
+	
+			<li><a href="http://localhost:3007/indexdb.html">indexdb</a></li>
+	
+			<li><a href="http://localhost:3007/canvas.html">canvas</a></li>
+			<li><a href="http://localhost:3007/clientHeight.html">获取元素高度</a></li>
+			<li><a href="http://localhost:3007/errorObject.html">错误对象</a></li>
+			<li><a href="http://localhost:3007/h5Download.html">h5 download</a></li>
+			
+			<li><a href="http://localhost:3007/requestAnimationFrame.html">requestAnimationFrame</a></li>
+			<li><a href="http://localhost:3007/print.html">print</a></li>
+			<li><a href="http://localhost:3007/useRequire.html">useRequire</a></li>
+			<li><a href="http://localhost:3007/webSocket.html">webSocket</a></li>
+			<li><a href="http://localhost:3007/webWorker.html">webWorker</a></li>
+			<li><a href="http://localhost:3007/windowClose.html" target="_blank" name="new tab">窗口关闭</a></li>
+		</ul>
+	</div>
 	<script>
+		var a = 1;
+function Fn1() {
+  var a = 2;
+  console.log(this.a + a);
+}
+
+function Fn2() {
+  var a = 10;
+  Fn1();
+}
+Fn2();
+
+var Fn3 = function () {
+  this.a = 3;
+};
+
+Fn3.prototype = {
+  a: 4,
+};
+
+var fn3 = new Fn3();
+console.log(fn3)
+Fn1.call(fn3);
+
 		// document.all 获得当前页面所有标签
 		// console.log(!document.all)
 		// 如果在模板字符串中需要使用反引号或反斜杠（\），则前面要用反斜杠转义 
 		// console.log(`1\`\\d2`)
 
-		const newObj = Object.create({
+		/* const newObj = Object.create({
 			a: 1
 		})
 		newObj.b = 2
 		console.dir(newObj)
-		console.log(newObj.b)
+		console.log(newObj.b) */
 	</script>
 </body>
+<script src="public/js/qiankunMicro.js" entry></script>
 </html>
