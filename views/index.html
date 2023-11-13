@@ -33,30 +33,6 @@
 		</ul>
 	</div>
 	<script>
-		var a = 1;
-function Fn1() {
-  var a = 2;
-  console.log(this.a + a);
-}
-
-function Fn2() {
-  var a = 10;
-  Fn1();
-}
-Fn2();
-
-var Fn3 = function () {
-  this.a = 3;
-};
-
-Fn3.prototype = {
-  a: 4,
-};
-
-var fn3 = new Fn3();
-console.log(fn3)
-Fn1.call(fn3);
-
 		// document.all 获得当前页面所有标签
 		// console.log(!document.all)
 		// 如果在模板字符串中需要使用反引号或反斜杠（\），则前面要用反斜杠转义 
