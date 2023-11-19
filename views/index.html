@@ -12,6 +12,7 @@
 		<pre style="min-width: 100%; white-space: pre-wrap; word-break: break-word;">
 		</pre>
 		<div>菜单</div>
+		<!-- 粘性布局 -->
 		<div style="position: sticky; top: 0; left: 0; right: 0; height: 20px; background-color: rgba(135, 128, 128, .3);"></div>
 		<ul>
 			<li v-for="(item, index) in urlList">
@@ -43,8 +44,7 @@
 					{ url: 'http://localhost:3007/windowClose.html', name: '窗口关闭', },
 				]
 				function main () {
-					// document.all 获得当前页面所有标签
-					// console.log(!document.all)
+					// document.all 获得当前页面所有标签 console.log(!document.all)
 					// 如果在模板字符串中需要使用反引号或反斜杠（\），则前面要用反斜杠转义 
 					// console.log(`1\`\\d2`)
 					/* const newObj = Object.create({
