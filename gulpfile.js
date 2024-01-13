@@ -129,7 +129,7 @@ gulp.task('nodemonTask', function (done) {
 	})
 	// 3006 是node express
 	// 3007 是gulp的服务
-	opn('http://localhost:3007')
+	// opn('http://localhost:3007')
 	done()
 })
 
