@@ -17,6 +17,15 @@ const setCookie = function (key, value, date) {
 	document.cookie = `${key}=${value}`
 }
 
+function isWeixin (){ //判断是否是微信浏览器
+	var ua = navigator.userAgent.toLowerCase();
+	if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			return true;
+	} else {
+			return false;
+	}
+}
+
 
 /*<div class="scratch_card" :class="[hasPrize === null ? '' : (hasPrize ? 'winPrize' : 'noPrize')]"
 	ref="scratchCardBox">
