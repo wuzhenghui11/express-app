@@ -20,51 +20,10 @@
 			</li>
 		</ul>
 	</div>
-	<script src="public/js/library/vue3.js" defer></script>
-	<script src="public/js/qiankunMicro.js" entry></script>
-	<script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+	<!-- <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script> -->
 
-
-	<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
-	<script>
-		function getIPs(callback){
-			var ip_dups = {};
-
-			var RTCPeerConnection = window.RTCPeerConnection
-				|| window.mozRTCPeerConnection
-				|| window.webkitRTCPeerConnection;
-			
-			console.log(RTCPeerConnection)
-
-			if (!RTCPeerConnection) {
-				callback([]);
-				return;
-			}
-
-			var pc = new RTCPeerConnection({iceServers:[]}),
-				noop = function(){};
-			pc.createDataChannel("");    
-			pc.createOffer(function(sdp) {
-				console.log(sdp)
-				sdp.sdp.split('\n').forEach(function(line) {   
-					if (line.indexOf('candidate') < 0) return;   
-					line.split(' ').forEach(function(part) {
-						if (part.indexOf('192.168.') === 0 || part.indexOf('172.') === 0 || part.indexOf('10.') === 0) {
-							if (!(part in ip_dups)) {
-								ip_dups[part] = true;
-							}
-						}
-					});
-				});
-				Object.keys(ip_dups).forEach(function(ip) {
-					callback(ip);
-				});
-			}, noop); 
-		}
-		getIPs(function (ip) {
-			console.log(ip)
-		})
-
+	<!-- <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script> -->
+	<!-- <script>
 		function isWeixin () { // 判断是否是微信浏览器
 			let ua = navigator.userAgent.toLowerCase()
 			return ua.match(/MicroMessenger/i) === 'micromessenger'
@@ -75,14 +34,22 @@
 				alert(JSON.stringify(wx))
 			}
 		})
-	</script>
-
-
-
-
-
-
-
+	</script> -->
+	<!--
+		defer
+		在执行到加了defer的script时会推入下载进程，然后再去执行下一个标签。
+		待到这个script的外链下载完毕时，需要看DOM是否渲染完毕了，如果渲染完毕了则执行defer script的内容，
+		然后触发DOMContentLoaded 的回调。多个defer等待所有defer下载完依次执行。
+		如果defer的script也放在</body>前，则绿色走完才走紫色和红色。此时对DOM渲染和DOMContentLoaded的时机的触发和普通script完全相同。
+		async
+		在执行到加了async的script时会先下载，然后再去执行下一个标签。
+		待到这个script的外链下载完毕时，如果DOM正在渲染则暂停，执行async script的内容。
+		多个async先下载完的先执行
+		
+		以上时大概 具体看这个 https://zhuanlan.zhihu.com/p/622763093?utm_id=0
+	-->
+	<script src="http://localhost:3006/public/js/library/vue3.js" defer></script>
+	<script src="http://localhost:3006/public/js/qiankunMicro.js" entry></script>
 	<script type="module">
 		const { createApp, ref, onMounted } = Vue
 		const app = createApp({
@@ -96,11 +63,12 @@
 					{ url: 'http://localhost:3007/clientHeight.html', name: '获取元素高度', },
 					{ url: 'http://localhost:3007/errorObject.html', name: '错误对象', },
 					{ url: 'http://localhost:3007/h5Download.html', name: 'h5Download', },
+					{ url: 'http://localhost:3007/getIPs.html', name: 'IP地址测试', },
 					{ url: 'http://localhost:3007/requestAnimationFrame.html', name: 'requestAnimationFrame', },
 					{ url: 'http://localhost:3007/print.html', name: 'print', },
 					{ url: 'http://localhost:3007/useRequire.html', name: 'useRequire', },
 					{ url: 'http://localhost:3007/webSocket.html', name: 'webSocket', },
-					{ url: 'http://localhost:3007/webWorker.html', name: 'webWorker', },
+					{ url: 'http://localhost:3007/webWorker.html', name: 'webWorker是什么', },
 					{ url: 'http://localhost:3007/windowClose.html', name: '窗口关闭', },
 				]
 				function main () {
