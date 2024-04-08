@@ -63,6 +63,7 @@
 					{ url: 'http://localhost:3007/clientHeight.html', name: '获取元素高度', },
 					{ url: 'http://localhost:3007/errorObject.html', name: '错误对象', },
 					{ url: 'http://localhost:3007/h5Download.html', name: 'h5Download', },
+					{ url: 'http://localhost:3007/promiseAsync.html', name: 'Promise和async', },
 					{ url: 'http://localhost:3007/getIPs.html', name: 'IP地址测试', },
 					{ url: 'http://localhost:3007/requestAnimationFrame.html', name: 'requestAnimationFrame', },
 					{ url: 'http://localhost:3007/print.html', name: 'print', },
@@ -91,6 +92,12 @@
 			}
 		})
 		app.mount('#app')
+
+		async function test () {
+			const res = await Promise.resolve(11)
+			console.log(res + 1)
+		}
+		test()
 	</script>
 </body>
 </html>
