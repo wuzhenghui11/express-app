@@ -141,22 +141,44 @@
 			// 归并排序
 			// 快速傅立叶变换
 
-			function Person(name, age) {} 
+			function Person() {
+				this.a = 111
+			} 
 
-			Person.prototype.a = 9999;
-			Person.__proto__.b = -9999;
+			Person.prototype.a = 999
+			Object.prototype.a = 'Object.prototype-999'
 
-			var will = new Person(); 
+			const person = new Person()
+			// console.dir(Person['[[Prototype]]'])
+			// console.dir(Object.getPrototypeOf(person))
 
-			// console.log(will.a); // 9999
+			// 原型链及属性寻找
 			/*
 				Person.__proto__ 指向构造该对象构造函数的原型 也就是 Person.prototype
-				Person是个方法 方法具有prototype属性 即Person.prototype 这个里面包含了所有实例共享的属性和constructor属性 指回原构造函数
+				Person是个方法特殊的对象 具有prototype属性 即 Person.prototype 这个里面包含了所有实例共享的属性和constructor属性 指回原构造函数
 			*/
-			console.dir(Person)
-			// console.dir(Person['[[Prototype]]'])
-			// console.dir(Object.getPrototypeOf(will))
-			// console.log(will.b); // undefined
+			
+			/*
+				寻找顺序
+				person.a = 111 (找到属性 a 111)
+				person.__proto__ === Person.prototype (找到属性 a 值为 999)
+				Person.prototype.__proto__ === Object.prototype (找到属性 a 值为 Object.prototype-999)
+				如果 Object.prototype 没有属性 a，则继续查找 Object.prototype.__proto__ 其值为null且无法修改浏览器会报错，查找结束并终止 即返回 undefined
+			 */
+			console.log(person.a) // 111
+
+			console.log(Person.prototype.__proto__ === Object.prototype, Object.prototype.__proto__) // true, null
+			
+			// Function.b = 222
+			// 
+			console.log(Person.__proto__ === Function.prototype)
+			Function.prototype.b = -999
+			Person.__proto__.b = -999
+			// Function.b 值为 222
+			// Function.__proto__ === Function.prototype (找到属性 b -999)
+			console.log(Function.b) // -999
+			
+			console.log(person.b) // undefined
 
 
 
@@ -207,10 +229,10 @@
 				let b = Array.prototype.slice.apply(arguments, [0, 1])
 				console.log(b[0], 'hh')
 			}
-			console.log(pObject.a)
 			console.dir(pObject)
 			console.dir(pFunc)
-			console.log(pFunc(1, 2))
+			pFunc(1, 2)
+
 
 			const array = [1, 2, 3]
 
@@ -232,9 +254,6 @@
 			});
 
 			console.log({ numCallbackRuns })
-
-
-
 
 
 
