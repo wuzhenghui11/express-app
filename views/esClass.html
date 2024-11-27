@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="assets/base.min.css" />
+</head>
+<body>
+	<div id="app">
+	</div>
+	<script src="public/js/library/vue3.js" defer></script>
+	<script type="module">
+		const { createApp, ref, onMounted } = Vue
+		const app = createApp({
+			setup () {
+        class Logger {
+          constructor() {
+            // 一个比较简单的解决方法是，在构造方法中绑定this，这样就不会找不到print方法了。
+            this.printName = this.printName.bind(this)
+          }
+          printName(name = 'there') {
+            this.print(`Hello ${name}`)
+            
+          }
+
+          print(text) {
+            console.log(text)
+          }
+        }
+
+        const logger = new Logger()
+        console.dir(logger)
+        // 解构后 this 不在指向 logger
+        const { printName } = logger
+        // printName() // 报错
+        // 还有一种解决方法是使用Proxy，获取方法的时候，自动绑定this
+        function selfish (target) {
+          const cache = new WeakMap();
+          const handler = {
+            get (target, key) {
+              const value = Reflect.get(target, key);
+              if (typeof value !== 'function') {
+                return value;
+              }
+              if (!cache.has(value)) {
+                cache.set(value, value.bind(target));
+              }
+              return cache.get(value);
+            }
+          };
+          const proxy = new Proxy(target, handler);
+          return proxy;
+        }
+
+        // const logger = selfish(new Logger());
+
+
+
+
+        // 实例和Object 对象解构赋值 如果没有此属性会到原型链上去寻找
+        const obj = Object.create({
+          b: 2
+        })
+        const { b } = obj
+        
+        console.log(b) // 2
+        console.dir(obj)
+
+				return {
+          
+				}
+			}
+		})
+		app.mount('#app')
+	</script>
+</body>
+</html>

@@ -86,6 +86,9 @@
 							'cache-control': 'no-cache',
 						})
 						// headers.append('Content-Type', 'application/json')
+						// 需要链接数据库
+						// http://localhost:3006/api/getData
+						// getData2 不需要
 						const request = new Request('http://localhost:3006/api/getData', {
 							method: 'post',
 							cache: 'default',
@@ -141,14 +144,25 @@
 			// 归并排序
 			// 快速傅立叶变换
 
+			function pp () {
+
+			}
+			pp.prototype.b = '999'
+			console.dir(Object.getPrototypeOf(pp)) // Function.prototype
+			console.log(pp.b, pp.name) // undefined pp
+			console.dir(pp)
+
 			function Person() {
 				this.a = 111
-			} 
+			}
+			console.dir(Person)
 
 			Person.prototype.a = 999
+			console.log(Object.getOwnPropertyDescriptor(Person.prototype, 'a'))
 			Object.prototype.a = 'Object.prototype-999'
 
 			const person = new Person()
+			console.log(person)
 			// console.dir(Person['[[Prototype]]'])
 			// console.dir(Object.getPrototypeOf(person))
 
@@ -159,7 +173,7 @@
 			*/
 			
 			/*
-				寻找顺序
+				寻找顺序 如果是构造函数实例或者 Object
 				person.a = 111 (找到属性 a 111)
 				person.__proto__ === Person.prototype (找到属性 a 值为 999)
 				Person.prototype.__proto__ === Object.prototype (找到属性 a 值为 Object.prototype-999)
