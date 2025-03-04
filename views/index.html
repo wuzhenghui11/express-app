@@ -92,7 +92,9 @@
 				}
 			}
 		})
-		app.mount('#app')
+		console.dir(app)
+		const component = app.mount('#app')
+		console.dir(component)
 
 		async function test () {
 			const res = await Promise.resolve(11)
