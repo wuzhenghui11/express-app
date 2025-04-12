@@ -28,6 +28,7 @@ router.post('/getData', (req, res, next) => {
 router.post('/getData2', (req, res, next) => {
 	console.log(req.body.testHanzi);
 	res.json({
+		"token": "abc123",
 		"state": 0,
 		"data": [
 			{
