@@ -25,6 +25,13 @@ router.post('/getData', (req, res, next) => {
 	})
 })
 
+router.post('/userInfo', (req, res, next) => {
+	res.json({
+		"name": "jack",
+		"phone": "13222222222",
+	})
+})
+
 router.post('/getData2', (req, res, next) => {
 	console.log(req.body.testHanzi);
 	res.json({
