@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="http://localhost:3007/assets/base.min.css" />
+	<style type="text/css"></style>
+</head>
+<body>
+	<div id="app" style="overflow: visible;">
+		
+	</div>
+	<script src="public/js/library/vue3.js" defer></script>
+	<script src="public/js/qiankunMicro.js" entry></script>
+	<script type="module">
+		const { createApp, ref, onMounted } = Vue
+		const app = createApp({
+			setup (props, context) {
+				function main () {
+					console.log(arguments);
+				}
+				onMounted(() => {
+					main()
+				})
+				return {
+				}
+			}
+		})
+		app.mount('#app')
+	</script>
+</body>
+</html>
