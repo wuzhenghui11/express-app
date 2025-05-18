@@ -17,6 +17,31 @@ const setCookie = function (key, value, date) {
 	document.cookie = `${key}=${value}`
 }
 
+function getMaxZIndex () {
+	const allElement = Array.from(document.all)
+	const zIndexArray = []
+	allElement.forEach((item) => {
+		const itemZIndex = Number(window.getComputedStyle(item, null).getPropertyValue('z-index'))
+		if(itemZIndex) {
+			zIndexArray.push(itemZIndex)
+		}
+	})
+	let maxZIndex = 0
+	if(zIndexArray.length) {
+		 maxZIndex = Math.max(...zIndexArray)
+	}
+	return maxZIndex + 1
+}
+
+function isWeixin (){ //判断是否是微信浏览器
+	var ua = navigator.userAgent.toLowerCase();
+	if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			return true;
+	} else {
+			return false;
+	}
+}
+
 
 /*<div class="scratch_card" :class="[hasPrize === null ? '' : (hasPrize ? 'winPrize' : 'noPrize')]"
 	ref="scratchCardBox">

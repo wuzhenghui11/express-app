@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="http://localhost:3007/assets/base.min.css" />
+	<style type="text/css"></style>
+</head>
+<body>
+	<div id="app">
+		{{ number }}
+	</div>
+	<script src="http://localhost:3006/public/js/library/vue3.js" defer></script>
+	<script src="http://localhost:3006/public/js/qiankunMicro.js" entry></script>
+	<script type="module">
+		const { createApp, ref, onMounted } = Vue
+		const app = createApp({
+			setup (props, context) {
+				const number = ref(11)
+				async function main () {
+					const res = await Promise.resolve(11)
+					number.value = res + 1
+				}
+				onMounted(() => {
+					setTimeout(() => {
+						main()
+					}, 1000)
+				})
+				return {
+					number,
+				}
+			}
+		})
+		app.mount('#app')
+	</script>
+</body>
+</html>

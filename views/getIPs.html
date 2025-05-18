@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="http://localhost:3007/assets/base.min.css" />
+	<style type="text/css"></style>
+</head>
+<body>
+	<div>
+		ip
+	</div>
+  <script>
+  		// console.dir(navigator.geolocation)
+  		navigator.geolocation.getCurrentPosition((succ) => {
+  			console.log(succ, 'succ')
+  		},
+  		(err) => {
+  			console.log(err, 'err')
+  		},
+  		/*{
+		  enableHighAccuracy: true,
+		  timeout: 100000,
+		  maximumAge: 0,
+		}*/)
+
+		function getIPs(callback){
+			var ip_dups = {};
+
+			var RTCPeerConnection = window.RTCPeerConnection
+				|| window.mozRTCPeerConnection
+				|| window.webkitRTCPeerConnection;
+			
+			// console.log(RTCPeerConnection)
+
+			if (!RTCPeerConnection) {
+				callback([]);
+				return;
+			}
+
+			var pc = new RTCPeerConnection({iceServers:[]}),
+				noop = function(){};
+			pc.createDataChannel("");
+			pc.createOffer(function(sdp) {
+				console.log(sdp)
+				sdp.sdp.split('\n').forEach(function(line) {
+					if (line.indexOf('candidate') < 0) return;
+					line.split(' ').forEach(function(part) {
+						if (part.indexOf('192.168.') === 0 || part.indexOf('172.') === 0 || part.indexOf('10.') === 0) {
+							if (!(part in ip_dups)) {
+								ip_dups[part] = true;
+							}
+						}
+					});
+				});
+				Object.keys(ip_dups).forEach(function(ip) {
+					callback(ip);
+				});
+			}, noop); 
+		}
+		// getIPs(function (ip) {
+		// 	console.log(ip)
+		// })
+	</script>
+</body>
+</html>

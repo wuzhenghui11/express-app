@@ -13,6 +13,26 @@
         console.log('setTimeout')
       }, 0)
 
+      async function test2 () {
+      	await new Promise((resolve) => {
+      		resolve()
+      	}).then(() => {
+      		console.log(33)
+      	})
+      }
+
+      async function test () {
+      	console.log(11)
+      	test2()
+      	// await test2()
+      	console.log(44)
+      	await new Promise((resolve) => {
+      		resolve()
+      	}).then(() => {
+      		console.log(22)
+      	})
+      }
+      test()
       Promise.resolve().then(function() {
         console.log('promise1')
       }).then(function() {

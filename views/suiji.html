@@ -86,6 +86,9 @@
 							'cache-control': 'no-cache',
 						})
 						// headers.append('Content-Type', 'application/json')
+						// 需要链接数据库
+						// http://localhost:3006/api/getData
+						// getData2 不需要
 						const request = new Request('http://localhost:3006/api/getData', {
 							method: 'post',
 							cache: 'default',
@@ -141,22 +144,53 @@
 			// 归并排序
 			// 快速傅立叶变换
 
-			function Person(name, age) {} 
+			function pp () {
 
-			Person.prototype.a = 9999;
-			Person.__proto__.b = -9999;
+			}
+			pp.prototype.b = '999'
+			console.dir(Object.getPrototypeOf(pp)) // Function.prototype
+			console.log(pp.b, pp.name) // undefined pp
+			console.dir(pp)
 
-			var will = new Person(); 
-
-			// console.log(will.a); // 9999
-			/*
-				Person.__proto__ 指向构造该对象构造函数的原型 也就是 Person.prototype
-				Person是个方法 方法具有prototype属性 即Person.prototype 这个里面包含了所有实例共享的属性和constructor属性 指回原构造函数
-			*/
+			function Person() {
+				this.a = 111
+			}
 			console.dir(Person)
+
+			Person.prototype.a = 999
+			console.log(Object.getOwnPropertyDescriptor(Person.prototype, 'a'))
+			Object.prototype.a = 'Object.prototype-999'
+
+			const person = new Person()
+			console.log(person)
 			// console.dir(Person['[[Prototype]]'])
-			// console.dir(Object.getPrototypeOf(will))
-			// console.log(will.b); // undefined
+			// console.dir(Object.getPrototypeOf(person))
+			// 原型链及属性寻找
+			/*
+				Person.__proto__ 指向构造该对象构造函数的原型 也就是 Function.prototype
+				Person是个方法特殊的对象 具有prototype属性 即 Person.prototype 这个里面包含了所有实例共享的属性和constructor属性 指回原构造函数
+			*/
+			
+			/*
+				寻找顺序 如果是构造函数实例或者 Object
+				person.a = 111 (找到属性 a 111)
+				person.__proto__ === Person.prototype (找到属性 a 值为 999)
+				Person.prototype.__proto__ === Object.prototype (找到属性 a 值为 Object.prototype-999)
+				如果 Object.prototype 没有属性 a，则继续查找 Object.prototype.__proto__ 其值为null且无法修改浏览器会报错，查找结束并终止 即返回 undefined
+			 */
+			console.log(person.a) // 111
+
+			console.log(Person.prototype.__proto__ === Object.prototype, Object.prototype.__proto__) // true, null
+			
+			// Function.b = 222
+			Function.prototype.b = -998
+			Person.__proto__.b = -999
+			// console.log(Person.__proto__ === Function.prototype) // true
+			// console.log(Function.__proto__ === Function.prototype) // true // 找到属性 b -999
+			// Function.b 值为 222
+			// console.log(Function.b) // -999
+			
+			console.log(person.b) // undefined
 
 
 
@@ -207,10 +241,10 @@
 				let b = Array.prototype.slice.apply(arguments, [0, 1])
 				console.log(b[0], 'hh')
 			}
-			console.log(pObject.a)
 			console.dir(pObject)
 			console.dir(pFunc)
-			console.log(pFunc(1, 2))
+			pFunc(1, 2)
+
 
 			const array = [1, 2, 3]
 
@@ -232,9 +266,6 @@
 			});
 
 			console.log({ numCallbackRuns })
-
-
-
 
 
 
