@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="http://localhost:3007/assets/base.min.css" />
+	<style type="text/css"></style>
+</head>
+<body>
+	<div id="app" style="overflow: visible;">
+		
+	</div>
+	<script src="public/js/library/vue3.js" defer></script>
+	<script src="public/js/qiankunMicro.js" entry></script>
+	<script type="module">
+		const { createApp, ref, onMounted } = Vue
+		const app = createApp({
+			setup (props, context) {
+        // Array.of() 方法是一个通用的工厂方法。例如，如果 Array 的子类继承了 of() 方法，
+        // 继承的 of() 方法将返回子类的新实例而不是 Array 实例。
+        // 事实上，this 值可以是任何接受单个参数表示新数组长度的构造函数，并且构造函数将与传递给 of() 的参数数量一起被调用。
+        // 当所有元素都被分配时，最终的 length 将再次设置。如果 this 值不是构造函数，则改用普通的 Array 构造函数。
+				function Main (len) {
+					console.log(arguments)
+          console.log(len)
+				}
+				onMounted(() => {
+					Array.of.call(Main, 0, 1, 2)
+				})
+
+        const array1 = ['a', 'b', 'c', 'd']
+        console.log(array1.copyWithin(1,2))
+
+				return {
+				}
+			}
+		})
+		app.mount('#app')
+	</script>
+</body>
+</html>
