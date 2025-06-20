@@ -13,7 +13,7 @@
 		</pre>
 		<div>菜单</div>
 		<!-- 粘性布局 -->
-		<div style="position: sticky; top: 0; left: 0; right: 0; height: 20px; background-color: rgba(135, 128, 128, .3);"></div>
+		<div title="粘性布局" style="position: sticky; top: 0; left: 0; right: 0; height: 20px; background-color: rgba(135, 128, 128, .3);"></div>
 		<ul>
 			<li v-for="(item, index) in urlList">
 				<a :key="index" :href="item.url">{{ item.name }}</a>
@@ -55,6 +55,7 @@
 		const app = createApp({
 			setup (props, context) {
 				const urlList = [
+					{ url: 'http://localhost:3007/callAndApply.html', name: 'callAndApply', },
 					{ url: 'http://localhost:3007/es6.html', name: 'es6', },
 					{ url: 'http://localhost:3007/esClass.html', name: 'esClass及解构赋值', },
 					{ url: 'http://localhost:3007/suiji.html', name: '随记', },
