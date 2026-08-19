@@ -50,17 +50,22 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public'), options));
-app.use(express.static(path.join(__dirname, 'assets'), options));
-app.use(express.static(path.join(__dirname, 'utils'), options));
-app.use(express.static(path.join(__dirname, 'views'), options));
-app.use(express.static(path.join(__dirname, 'dist'), options));
-app.use(express.static(path.join(__dirname, '../express-app'), options));
+app.use('/static', express.static(path.join(__dirname, 'public'), options));
+app.use('/static', express.static(path.join(__dirname, 'assets'), options));
+app.use('/static', express.static(path.join(__dirname, 'utils'), options));
+app.use('/static', express.static(path.join(__dirname, 'views'), options));
+app.use('/static', express.static(path.join(__dirname, 'dist'), options));
+app.use('/static', express.static(path.join(__dirname, '../express-app'), options));
 
 // ----------------------------------------------------------------
 app.use('/api', [cors, router]);
 
 app.use('/users', users);
+
+app.get('/about', function(req, res) {
+  res.type('text/plain')
+  res.send('about')
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="http://localhost:3007/assets/base.min.css" />
+	<style type="text/css"></style>
+</head>
+<body>
+	<div>
+	</div>
+	<script>
+		function Parent (name) {
+      this.name = name
+    }
+    Parent.prototype.printName = function () {
+      console.log(this.name);
+    }
+
+    function Child (name, age) {
+      Parent.call(this, name)
+      this.age = age
+    }
+    
+
+    Child.prototype = Object.create(Parent.prototype)
+    // Child.prototype = new Parent()
+    Child.prototype.constructor = Child
+
+    Child.prototype.getAge = function () {
+      console.log(this.age);
+    }
+
+    const parent = new Parent('jack')
+    console.dir(parent);
+    parent.printName()
+
+    const child = new Child('make', 12)
+    console.dir(child);
+    child.printName()
+    child.getAge()
+
+	</script>
+</body>
+</html>
