@@ -63,15 +63,17 @@ app.use('/api', [cors, router]);
 app.use('/users', users);
 
 app.get('/about', function(req, res) {
-  res.type('text/plain')
-  res.send('about')
+
+  res.type('text/html')
+  res.send('<h1>about</h1>')
 })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  // next(err);
+  res.send('Not Found')
 });
 
 // error handlers
