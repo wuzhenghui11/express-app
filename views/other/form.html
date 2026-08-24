@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户信息提交表单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .form-card {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 420px;
+        }
+        .form-title {
+            font-size: 22px;
+            color: #222;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .form-item {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dcdfe6;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #409eff;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            background-color: #409eff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .submit-btn:hover {
+            background-color: #337ecc;
+        }
+        .tip-text {
+            margin-top:16px;
+            font-size:14px;
+            color:#666;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-card">
+        <h2 class="form-title">信息提交</h2>
+        <form id="userForm">
+            <div class="form-item">
+                <label for="userName">用户名 userName</label>
+                <input type="text" id="userName" name="userName" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-item">
+                <label for="email">邮箱 Email</label>
+                <input type="email" id="email" name="email" placeholder="请输入邮箱地址" required>
+            </div>
+            <button class="submit-btn" type="submit">提交</button>
+        </form>
+        <form action="/api/userInfo" method="POST">
+            <input style="display: none;" type="text" id="isBiaodan" value="1" name="isBiaodan" required>
+            <div class="form-item">
+                <label for="userName">用户名 userName</label>
+                <input type="text" id="userName" name="userName" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-item">
+                <label for="email">邮箱 Email</label>
+                <input type="email" id="email" name="email" placeholder="请输入邮箱地址" required>
+            </div>
+            <button class="submit-btn" type="submit">表单提交</button>
+        </form>
+        <div class="tip-text">提交后数据会在控制台打印，可对接后端接口</div>
+    </div>
+
+    <script>
+        const form = document.getElementById('userForm');
+        form.addEventListener('submit', function(e) {
+            // 阻止表单默认跳转提交
+            e.preventDefault();
+
+            // 获取表单数据
+            const formData = {
+                userName: document.getElementById('userName').value.trim(),
+                email: document.getElementById('email').value.trim()
+            };
+            console.log('表单提交数据：', formData);
+
+            // =====================
+            // 这里可以写ajax/fetch请求，发送数据给后端接口示例
+            
+            fetch('/api/userInfo', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                alert('提交成功！')
+            }).catch(err => {
+                alert('提交失败');
+                console.error(err);
+            })
+           
+            // =====================
+
+            alert(`提交成功！\n用户名：${formData.userName}\n邮箱：${formData.email}`);
+        })
+    </script>
+</body>
+</html>

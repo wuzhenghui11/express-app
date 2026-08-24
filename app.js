@@ -4,6 +4,8 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session')
+const expressSession = require('express-session')
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const getIPAddress = require('./utils/serverUtils').getIPAddress;
@@ -46,10 +48,40 @@ const cors = function (req, res, next) {
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(logger('dev'));
+
 app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  // **httpOnly: true（安全推荐）**
+  // 浏览器 JS 拿不到这个 Cookie，避免网站被注入脚本偷走登录会话
+  httpOnly: true,
+
+  // Cookie Options
+  maxAge: 1 * 60 * 60 * 1000 // 1 hours
+}))
+
+// 具体用法看官网问AI都可以 问AI 通俗易懂
+/* app.use(expressSession({
+  secret: 'abc', // 必填！签名cookie，防止sessionId被篡改
+  resave: false, // 推荐false：没有修改session时，不强制重新保存
+  saveUninitialized: false, // 推荐false：空会话不自动创建cookie（节省资源）
+  name: 'sid', // cookie名称，默认connect.sid，建议自定义
+  cookie: { // 配置发给浏览器的cookie
+    maxAge: 1 * 60 * 60 * 1000, // 会话有效期 1天（毫秒）
+    httpOnly: true, // 前端js无法读取cookie，防XSS（安全必开）
+    secure: false, // 开发false；线上https改为true，只在https传输cookie
+    sameSite: 'lax' // 防御CSRF攻击
+  }
+})); */
+
 app.use('/static', express.static(path.join(__dirname, 'public'), options));
 app.use('/static', express.static(path.join(__dirname, 'assets'), options));
 app.use('/static', express.static(path.join(__dirname, 'utils'), options));
