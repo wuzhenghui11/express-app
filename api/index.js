@@ -62,11 +62,20 @@ router.post('/getData2', (req, res) => {
 		]
 	})
 })
+router.get('/userInfo', (req, res) => {
+	res.json({
+		code: 200,
+		data: {
+			userName: req.session.userName,
+			email: req.session.email
+		}
+	})
+})
 
 /**
  * 一个简单的表单
  */
-router.post('/userInfo', (req, res) => {
+router.post('/userInfoSubmit', (req, res) => {
 	console.log(req.xhr);
 	console.log('body:', req.body);
 	console.log('accepts:', req.accepts());
@@ -74,13 +83,15 @@ router.post('/userInfo', (req, res) => {
 	// req.cookie
 	// req.signedCookies
 	if (req.body.isBiaodan) {
-		res.clearCookie('USERINFO');
+		res.clearCookie('setTestCookie');
 		res.redirect(303, '/about');
 	} else if (req.xhr) {
 		console.log('body:', req.body);
 	} else {
 		req.session.userName = req.body.userName
-		res.cookie('USERINFO', '123', {maxAge: 60000})
+		req.session.email = req.body.email
+
+		res.cookie('setTestCookie', '123', {maxAge: 60000})
 		// res.cookie('SIGNED_USERINFO', '123', { signed: true, httpOnly: true })
 		res.json({
 			message: '接收成功',

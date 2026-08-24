@@ -90,7 +90,7 @@
             </div>
             <button class="submit-btn" type="submit">提交</button>
         </form>
-        <form action="/api/userInfo" method="POST">
+        <form action="/api/userInfoSubmit" method="POST">
             <input style="display: none;" type="text" id="isBiaodan" value="1" name="isBiaodan" required>
             <div class="form-item">
                 <label for="userName">用户名 userName</label>
@@ -121,7 +121,7 @@
             // =====================
             // 这里可以写ajax/fetch请求，发送数据给后端接口示例
             
-            fetch('/api/userInfo', {
+            fetch('/api/userInfoSubmit', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
