@@ -105,7 +105,7 @@ router.post('/userInfoSubmit', (req, res) => {
  * 文件上传
  */
 const uploadDir = path.join(__dirname, '../my-uploads')
-console.log(uploadDir);
+console.log(__dirname + 'index.js 打印', '文件上传在:', uploadDir);
 // 如果文件夹不存在，自动创建
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true })

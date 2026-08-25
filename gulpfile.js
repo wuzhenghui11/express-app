@@ -121,10 +121,15 @@ gulp.task('connectTask', function(done) {
 	})
 	done()
 })
-
+// console.log(resolve('api/') + '*.js');
 gulp.task('nodemonTask', function (done) {
 	nodemon({
-		watch: ['./gulpfile.js', './routes/*.js', './routes/**/*.js'],
+		watch: [
+			/* resolve('./gulpfile.js'), */
+			resolve('./app.js'),
+			resolve('api/') + '*.js', 
+			// './routes/*.js', './routes/**/*.js'
+		],
 		script: './bin/www.js'
 	})
 	// 3006 是node express

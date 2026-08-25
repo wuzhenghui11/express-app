@@ -21,12 +21,12 @@ const users = require('./api/users.js');
 console.log("express server running at http://" + getIPAddress() + ":3006");
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+// app.set('views', path.join(__dirname, 'views'));
 // 不使用HTML
 // app.set('view engine', 'ejs');
 // 自定义后缀名 改成.html
 app.engine('.html', ejs.__express);
-app.set('view engine', 'html');
+// app.set('view engine', 'html');
 
 
 const options = {
@@ -100,6 +100,20 @@ app.get('/about', function(req, res) {
   res.send('<h1>about</h1>')
 })
 
+app.get('/b', function(req, res) {
+  console.log('/b (part 2): 抛出错误 ' );
+  throw new Error('b 失败 ');
+})
+app.use('/b', function(err, req, res, next){
+  console.log('/b 检测到错误并传递 ');
+  // 500
+  next(err);
+  // 404
+  // next();
+});
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -108,29 +122,33 @@ app.use(function(req, res, next) {
   res.send('Not Found')
 });
 
-// error handlers
+// console.log(process.env)
 
+// error handlers
 // development error handler
 // will print stacktrace
+app.set('env', process.env.NODE_ENV)
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render('error development', {
       message: err.message,
       error: err
     });
   });
 }
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
+if (app.get('env') !== 'development') {
+  // production error handler
+  // no stacktraces leaked to user
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    // res.send('500 - 服务器错误 ');
+    res.render('error production', {
+      message: err.message,
+      error: {}
+    });
   });
-});
+}
 
 
 module.exports = app;
