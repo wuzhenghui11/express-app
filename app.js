@@ -22,12 +22,12 @@ const users = require('./api/users.js');
 console.log("express server running at http://" + getIPAddress() + ":3006");
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 // 不使用HTML
-// app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 // 自定义后缀名 改成.html
 app.engine('.html', ejs.__express);
-// app.set('view engine', 'html');
+app.set('view engine', 'html');
 
 
 const options = {
@@ -115,7 +115,7 @@ app.get('/about', function(req, res) {
 })
 
 app.get('/b', function(req, res) {
-  console.log('/b (part 2): 抛出错误 ' );
+  console.log('/b : 抛出错误 ' );
   throw new Error('b 失败 ');
 })
 app.use('/b', function(err, req, res, next){
@@ -143,6 +143,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
+    // res.send('500')
     res.render('error development', {
       message: err.message,
       error: err
