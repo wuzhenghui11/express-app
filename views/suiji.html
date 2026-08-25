@@ -163,14 +163,13 @@
 
 			const person = new Person()
 			console.log(person)
-			// console.dir(Person['[[Prototype]]'])
+			// console.dir(Person['[[Prototype]]']) // undefined
 			// console.dir(Object.getPrototypeOf(person))
 			// 原型链及属性寻找
 			/*
 				Person.__proto__ 指向构造该对象构造函数的原型 也就是 Function.prototype
 				Person是个方法特殊的对象 具有prototype属性 即 Person.prototype 这个里面包含了所有实例共享的属性和constructor属性 指回原构造函数
 			*/
-			
 			/*
 				寻找顺序 如果是构造函数实例或者 Object
 				person.a = 111 (找到属性 a 111)

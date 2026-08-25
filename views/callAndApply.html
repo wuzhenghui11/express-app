@@ -17,6 +17,10 @@
 		const { createApp, ref, onMounted } = Vue
 		const app = createApp({
 			setup (props, context) {
+				/* 
+					call() 和 apply()都是为了改变被调用的函数内部的上下文(context)而存在的,即改变被调用的函数内部的this指向; 
+				*/
+
         // Array.of() 方法是一个通用的工厂方法。例如，如果 Array 的子类继承了 of() 方法，
         // 继承的 of() 方法将返回子类的新实例而不是 Array 实例。
         // 事实上，this 值可以是任何接受单个参数表示新数组长度的构造函数，并且构造函数将与传递给 of() 的参数数量一起被调用。

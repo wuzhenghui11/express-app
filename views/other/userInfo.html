@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>用户信息</title>
+  <style>
+    .container { width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
+    .item { margin: 12px 0; font-size: 16px; }
+    .label { color: #666; margin-right: 8px; }
+    .loading { color: #999; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h3>用户信息</h3>
+  <div id="tip" class="loading">加载中...</div>
+  <div class="item">
+    <span class="label">用户名：</span>
+    <span id="userName"></span>
+  </div>
+  <div class="item">
+    <span class="label">邮箱：</span>
+    <span id="email"></span>
+  </div>
+</div>
+
+<script>
+// 获取DOM元素
+const tipEl = document.getElementById('tip')
+const userNameEl = document.getElementById('userName')
+const emailEl = document.getElementById('email')
+
+// 请求用户接口
+async function fetchUserInfo() {
+  try {
+    // 替换成你的后端接口地址
+    const res = await fetch('http://localhost:3006/api/userInfo')
+    console.log(res)
+    if (!res.ok) throw new Error('接口请求失败')
+
+    const data = await res.json()
+    console.log(data);
+    tipEl.innerText = ''
+    // 渲染用户名、邮箱
+    userNameEl.innerText = data.data.userName
+    emailEl.innerText = data.data.email
+  } catch (err) {
+    tipEl.className = 'error'
+    tipEl.innerText = '加载失败：' + err.message
+    console.error(err)
+  }
+}
+
+// 页面加载执行
+fetchUserInfo()
+</script>
+</body>
+</html>
