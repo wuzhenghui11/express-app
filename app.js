@@ -1,6 +1,7 @@
 const express = require('express');
 
 const path = require('path');
+const fs = require('fs')
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -46,10 +47,23 @@ const cors = function (req, res, next) {
   next();
 };
 
+// console.log(process.env)
+app.set('env', process.env.NODE_ENV)
+
+switch(app.get('env')) {
+  case 'development':
+    // 紧凑的、彩色的开发日志
+    app.use(logger('dev'));
+    // app.use(logger('combined'));
+    break;
+  case 'production':
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, '/var/log/access.log'), { flags: 'a' })
+    app.use(logger('combined', { stream: accessLogStream }));
+    break;
+}
+
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
-app.use(logger('dev'));
 
 app.use(bodyParser.json());
 
@@ -122,12 +136,10 @@ app.use(function(req, res, next) {
   res.send('Not Found')
 });
 
-// console.log(process.env)
-
 // error handlers
 // development error handler
 // will print stacktrace
-app.set('env', process.env.NODE_ENV)
+
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
