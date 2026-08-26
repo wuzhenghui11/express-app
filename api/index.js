@@ -30,9 +30,10 @@ router.post('/getData', (req, res) => {
 	mongodb.start().then((data) => {
 		res.json({
 			"state": 0,
-			"data": [data]
+			"data": data
 		})
 	}).catch((e) => {
+		console.log(e);
 		res.json({
 			"stateCode": 2,
 			"error": "连接错误",

@@ -5,14 +5,18 @@ const client = new MongoClient(URL)
 
 
 async function start () {
-  await client.connect()
-  console.log('Connected successfully to server');
-  const db = client.db('admin')
-  const collection = db.collection('users')
-  let filter = { city: '武汉' }
-  let result = collection.findOne(filter)
-  // let result = collection.find(filter)
-  return result
+  try {
+    await client.connect()
+    console.log('Connected successfully to server');
+    const db = client.db('admin') // dbname
+    const coll = db.collection('users') // 集合相当于表
+    let filter = { city: '武汉' };
+    // let result = await coll.findOne(filter)
+    let result = await coll.find(filter).toArray();
+    return result
+  } catch (e) {
+    throw new Error(e)
+  }
 }
 
 // start().then((data) => {
