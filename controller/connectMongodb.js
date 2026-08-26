@@ -8,9 +8,10 @@ async function start () {
   await client.connect()
   console.log('Connected successfully to server');
   const db = client.db('admin')
-  const collection = db.collection('test')
-  let filter = { userName: 'wzh' }
+  const collection = db.collection('users')
+  let filter = { city: '武汉' }
   let result = collection.findOne(filter)
+  // let result = collection.find(filter)
   return result
 }
 

@@ -76,7 +76,7 @@
 						return xhr;
 					}
 
-					function testGetData () {
+					async function testGetData () {
 						const params = {
 							id: '121',
 							arr: [1, 2, 3]
@@ -95,9 +95,16 @@
 							body: JSON.stringify(params),
 							headers,
 						})
-						fetch(request).then((response) => {
-							console.log(response, 'response')
-						})
+						try {
+							const res = await fetch(request)
+							if (!res.ok) throw new Error('接口请求失败')
+
+							const data = await res.json()
+							console.log('response', data)
+						} catch (e) {
+							console.log(e);
+						}
+						
 					}
 					function onGetDataBtnClick () {
 						arr.value[2] = 5

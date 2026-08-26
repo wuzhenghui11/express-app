@@ -127,7 +127,8 @@ gulp.task('nodemonTask', function (done) {
 		watch: [
 			/* resolve('./gulpfile.js'), */
 			resolve('./app.js'),
-			resolve('api/') + '*.js', 
+			resolve('api/') + '*.js',
+			resolve('controller/') + '*.js',
 			// './routes/*.js', './routes/**/*.js'
 		],
 		script: './bin/www.js'
