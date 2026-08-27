@@ -63,6 +63,7 @@ router.post('/getData2', (req, res) => {
 		]
 	})
 })
+
 router.get('/userInfo', (req, res) => {
 	res.json({
 		code: 200,
@@ -87,19 +88,36 @@ router.post('/userInfoSubmit', (req, res) => {
 		res.clearCookie('setTestCookie');
 		res.redirect(303, '/about');
 	} else if (req.xhr) {
-		console.log('body:', req.body);
+		res.json({
+			code: 12,
+			message: '提交成功',
+			...req.body
+		})
 	} else {
+		// fetch 提交
+		
 		req.session.userName = req.body.userName
 		req.session.email = req.body.email
 
 		res.cookie('setTestCookie', '123', {maxAge: 60000})
 		// res.cookie('SIGNED_USERINFO', '123', { signed: true, httpOnly: true })
-		res.json({
-			message: '接收成功',
-			...req.body
+
+		mongodb.insert(req.body).then((result) => {
+			console.log('insertResult', result);
+			res.json({
+				code: 12,
+				message: '提交成功',
+				...req.body
+			})
+		}).catch ((e) => {
+			res.json({
+				code: 0,
+				message: '提交失败',
+			})
+		}).finally (() => {
+			mongodb.client.close()
 		})
 	}
-	
 })
 
 /**
