@@ -6,7 +6,9 @@ const favicon = require('serve-favicon');
 // 日志相关
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
+// 放在浏览器
 const cookieSession = require('cookie-session')
+// 服务器层面的暂时保存 服务重启会消失
 const expressSession = require('express-session')
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
@@ -107,7 +109,7 @@ app.use('/static', express.static(path.join(__dirname, '../express-app'), option
 // ----------------------------------------------------------------
 app.use('/api', [cors, router]);
 
-app.use('/users', users);
+app.use('/users', [cors, users]);
 
 app.get('/about', function(req, res) {
 
